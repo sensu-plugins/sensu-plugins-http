@@ -116,25 +116,25 @@ class CheckJson < Sensu::Plugin::Check::CLI
     end
     res = http.request(req)
 
-    case res.code
-    when /^2/
-      if json_valid?(res.body)
-        if !config[:key].nil? && !config[:value].nil?
-          json = JSON.parse(res.body)
-          # #YELLOW
-          if json[config[:key]].to_s == config[:value].to_s # rubocop:disable BlockNesting
-            ok 'Valid JSON and key present and correct'
-          else
-            critical 'JSON key check failed'
-          end
-        else
-          ok 'Valid JSON returned'
-        end
-      else
-        critical 'Response contains invalid JSON'
+    critical res.code unless res.code =~ /^2/
+    critical 'invalid JSON from request' unless json_valid?(res.body)
+    ok 'valid JSON returned' if config[:key].nil? && config[:value].nil?
+
+    json = JSON.parse(res.body)
+
+    begin
+      keys = config[:key].scan(/(?:\\\.|[^.])+/).map { |key| key.gsub(/\\./, '.') }
+
+      leaf = keys.reduce(json) do |tree, key|
+        fail "could not find key: #{config[:key]}" unless tree.key?(key)
+        tree[key]
       end
-    else
-      critical res.code
+
+      fail "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf == config[:value]
+
+      ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
+    rescue => e
+      critical "key check failed: #{e}"
     end
   end
 end
