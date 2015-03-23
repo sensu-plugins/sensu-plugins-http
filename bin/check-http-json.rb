@@ -36,6 +36,9 @@ require 'json'
 require 'net/http'
 require 'net/https'
 
+#
+# Check JSON
+#
 class CheckJson < Sensu::Plugin::Check::CLI
   option :url, short: '-u URL'
   option :host, short: '-h HOST'
