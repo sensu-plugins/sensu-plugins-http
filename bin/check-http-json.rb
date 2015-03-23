@@ -114,7 +114,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     res = http.request(req)
 
     critical res.code unless res.code =~ /^2/
-    critical "invalid JSON from request: " unless json_valid?(res.body)
+    critical 'invalid JSON from request' unless json_valid?(res.body)
     ok 'valid JSON returned' if config[:key].nil? && config[:value].nil?
 
     json = JSON.parse(res.body)
@@ -122,12 +122,12 @@ class CheckJson < Sensu::Plugin::Check::CLI
     begin
       keys = config[:key].scan(/(?:\\\.|[^.])+/).map { |key| key.gsub(/\\./, '.') }
 
-      leaf = keys.inject(json) do |tree, key|
-        raise ArgumentError, "could not find key: #{config[:key]}" unless tree.has_key?(key)
+      leaf = keys.reduce(json) do |tree, key|
+        fail "could not find key: #{config[:key]}" unless tree.key?(key)
         tree[key]
       end
 
-      raise ArgumentError, "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf == config[:value]
+      fail "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf == config[:value]
 
       ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
     rescue => e
