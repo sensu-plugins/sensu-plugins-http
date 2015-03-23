@@ -31,6 +31,9 @@ require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'net/https'
 
+#
+# Check HTTP
+#
 class CheckHTTP < Sensu::Plugin::Check::CLI
   option :url,
          short: '-u URL',

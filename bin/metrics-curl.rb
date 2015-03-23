@@ -33,6 +33,9 @@ require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'socket'
 require 'sensu-plugin/metric/cli'
 
+#
+# Curl Metrics
+#
 class CurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
   option :url,
          short: '-u URL',

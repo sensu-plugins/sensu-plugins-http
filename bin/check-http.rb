@@ -35,6 +35,9 @@ require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
 
+#
+# Check HTTP
+#
 class CheckHTTP < Sensu::Plugin::Check::CLI
   option :ua,
          short: '-x USER-AGENT',
