@@ -39,7 +39,9 @@ require 'rest-client'
 require 'socket'
 require 'json'
 require 'uri'
-
+#
+# HttpJsonGraphite - see description above
+#
 class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
   option :url,
          description: 'Full URL to the endpoint',
