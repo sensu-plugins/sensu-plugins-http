@@ -13,6 +13,7 @@
  * bin/check-http
  * bin/check-https-cert
  * bin/metrics-curl
+ * bin/http-json-graphite
 
 ## Usage
 
