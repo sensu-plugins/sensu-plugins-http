@@ -30,7 +30,6 @@
 #   for details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'json'
 require 'net/http'
@@ -90,7 +89,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     return false
   end
 
-  def acquire_resource
+  def acquire_resource # rubocop:disable all
     http = Net::HTTP.new(config[:host], config[:port])
 
     if config[:ssl]

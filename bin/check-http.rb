@@ -30,7 +30,6 @@
 #   for details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
@@ -185,7 +184,7 @@ class CheckHTTP < Sensu::Plugin::Check::CLI
     end
   end
 
-  def acquire_resource
+  def acquire_resource # rubocop:disable all
     http = nil
 
     if config[:no_proxy]
