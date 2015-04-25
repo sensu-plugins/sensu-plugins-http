@@ -33,7 +33,7 @@ require 'net/https'
 #
 # Check HTTP
 #
-class CheckHTTP < Sensu::Plugin::Check::CLI
+class CheckHttpCert < Sensu::Plugin::Check::CLI
   option :url,
          short: '-u URL',
          long: '--url URL',

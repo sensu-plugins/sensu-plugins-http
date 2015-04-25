@@ -14,7 +14,6 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: net
 #
 # USAGE:
 #   #YELLOW
@@ -37,7 +36,7 @@ require 'net/https'
 #
 # Check HTTP
 #
-class CheckHTTP < Sensu::Plugin::Check::CLI
+class CheckHttp < Sensu::Plugin::Check::CLI
   option :ua,
          short: '-x USER-AGENT',
          long: '--user-agent USER-AGENT',
