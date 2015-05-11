@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
                                'releae_draft'       => 'false',
                                'release_prerelease' => 'false'
   }
-  s.name                   = 'sensu-plugins-metrics'
+  s.name                   = 'sensu-plugins-http'
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
