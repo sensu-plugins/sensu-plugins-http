@@ -17,16 +17,16 @@ Gem::Specification.new do |s|
   s.date                   = Date.today.to_s
   s.description            = 'Sensu plugins for various http monitors and metrics'
   s.email                  = '<sensu-users@googlegroups.com>'
-  s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.executables            = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.homepage               = 'https://github.com/sensu-plugins/sensu-plugins-http'
   s.license                = 'MIT'
   s.metadata               = { 'maintainer'         => '',
-                               'development_status' => 'unmaintained',
+                               'development_status' => 'active',
                                'production_status'  => 'unstable - testing recommended',
-                               'releae_draft'       => 'false',
+                               'release_draft'      => 'false',
                                'release_prerelease' => 'false'
-  }
+                              }
   s.name                   = 'sensu-plugins-http'
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
