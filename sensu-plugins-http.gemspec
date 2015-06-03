@@ -17,13 +17,8 @@ Gem::Specification.new do |s|
   s.date                   = Date.today.to_s
   s.description            = 'Sensu plugins for various http monitors and metrics'
   s.email                  = '<sensu-users@googlegroups.com>'
-<<<<<<< HEAD
-  s.executables            = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
-=======
-  s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.executables            = Dir.glob('bin/**/*').map { |file| File.basename(file) }
->>>>>>> update repo
+  s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.homepage               = 'https://github.com/sensu-plugins/sensu-plugins-http'
   s.license                = 'MIT'
   s.metadata               = { 'maintainer'         => 'sensu-plugin',
