@@ -14,5 +14,8 @@
 mkmf.log
 .vagrant/*
 .DS_Store
-.idea/*
 *.gem
+
+#Intellij files
+*.iml
+*.idea
