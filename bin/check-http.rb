@@ -131,6 +131,13 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          long: '--redirect-to URL',
          description: 'Redirect to another page'
 
+  option :whole_response,
+         short: '-w',
+         long: '--whole-response',
+         boolean: true,
+         default: false,
+         description: 'Print whole output when check fails'
+
   option :response_bytes,
          short: '-b BYTES',
          long: '--response-bytes BYTES',
@@ -230,10 +237,14 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     end
     res = http.request(req)
 
-    if config[:response_bytes]
-      body = "\n" + res.body[0..config[:response_bytes]]
+    if config[:whole_response]
+      body = "\n" + res.body
     else
-      body = ''
+      if config[:response_bytes]
+        body = "\n" + res.body[0..config[:response_bytes]]
+      else
+        body = ''
+      end
     end
 
     if config[:require_bytes] && res.body.length != config[:require_bytes]
