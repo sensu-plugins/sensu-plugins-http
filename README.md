@@ -14,6 +14,7 @@
  * bin/check-http.rb
  * bin/check-https-cert.rb
  * bin/metrics-curl.rb
+ * bin/check-last-modified.rb
 
 ## Usage
 
