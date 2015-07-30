@@ -3,6 +3,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
+## 0.2.0 - 2015-07-30
+- Added a check for last modified time in HTTP headers
+
 ## [0.1.1] - 2015-07-14
 ### Changed
 - updated sensu-plugin gem to 1.2.0
