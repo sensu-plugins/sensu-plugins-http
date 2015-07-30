@@ -64,7 +64,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
       config[:ssl] = uri.scheme == 'https'
     else
       # #YELLOW
-      unless config[:host] && config[:path] # rubocop:disable IfUnlessModifier
+      unless config[:host] && config[:path]
         unknown 'No URL specified'
       end
       config[:port] ||= config[:ssl] ? 443 : 80

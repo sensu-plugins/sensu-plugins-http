@@ -173,7 +173,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       config[:ssl] = uri.scheme == 'https'
     else
       # #YELLOW
-      unless config[:host] && config[:request_uri] # rubocop:disable IfUnlessModifier
+      unless config[:host] && config[:request_uri]
         unknown 'No URL specified'
       end
       config[:port] ||= config[:ssl] ? 443 : 80
