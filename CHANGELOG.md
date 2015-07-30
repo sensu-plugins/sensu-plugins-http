@@ -4,7 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## Unreleased
-- nothing
+
+### Added
+- POST mode for check-http-json.rb
 
 ## 0.2.0 - 2015-07-30
 
