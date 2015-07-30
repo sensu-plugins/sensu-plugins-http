@@ -43,6 +43,8 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :path, short: '-p PATH'
   option :query, short: '-q QUERY'
   option :port, short: '-P PORT', proc: proc(&:to_i)
+  option :method, short: '-m GET|POST'
+  option :postbody, short: '-b /file/with/post/body'
   option :header, short: '-H HEADER', long: '--header HEADER'
   option :ssl, short: '-s', boolean: true, default: false
   option :insecure, short: '-k', boolean: true, default: false
@@ -102,7 +104,15 @@ class CheckJson < Sensu::Plugin::Check::CLI
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if config[:insecure]
     end
 
-    req = Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
+    if config[:method] == 'POST'
+      req = Net::HTTP::Post.new([config[:path], config[:query]].compact.join('?'))
+    else
+      req = Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
+    end
+    if config[:postbody]
+      post_body = IO.readlines(config[:postbody])
+      req.body = post_body.join
+    end
     if !config[:user].nil? && !config[:password].nil?
       req.basic_auth config[:user], config[:password]
     end
