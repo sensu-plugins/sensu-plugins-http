@@ -15,7 +15,10 @@ Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
   s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
-  s.description            = 'Sensu plugins for various http monitors and metrics'
+  s.description            = 'This plugin provides native HTTP instrumentation
+                              for monitoring and metrics collection, including:
+                              response code, JSON response, HTTP last modified,
+                              SSL expiry, and metrics via `curl`.'
   s.email                  = '<sensu-users@googlegroups.com>'
   s.executables            = Dir.glob('bin/**/*.rb').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
