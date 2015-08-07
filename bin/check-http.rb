@@ -201,6 +201,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     else
       http = Net::HTTP.new(config[:host], config[:port])
     end
+    http.read_timeout = config[:timeout]
+    http.open_timeout = config[:timeout]
+    http.ssl_timeout = config[:timeout]
 
     warn_cert_expire = nil
     if config[:ssl]
