@@ -7,6 +7,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ### Added
 - POST mode for check-http-json.rb
+### Fixed
+- check-http.rb will no longer fail if the plugin timeout is longer than the net/http default timeout
 
 ## 0.2.0 - 2015-07-30
 
