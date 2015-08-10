@@ -15,6 +15,7 @@
  * bin/check-https-cert.rb
  * bin/check-last-modified.rb
  * bin/metrics-curl.rb
+ * bin/http-json-graphite.rb
 
 ## Usage
 
