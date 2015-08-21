@@ -173,7 +173,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       config[:ssl] = uri.scheme == 'https'
     else
       # #YELLOW
-      unless config[:host] && config[:request_uri] # rubocop:disable IfUnlessModifier
+      unless config[:host] && config[:request_uri]
         unknown 'No URL specified'
       end
       config[:port] ||= config[:ssl] ? 443 : 80
@@ -204,6 +204,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     else
       http = Net::HTTP.new(config[:host], config[:port])
     end
+    http.read_timeout = config[:timeout]
+    http.open_timeout = config[:timeout]
+    http.ssl_timeout = config[:timeout]
 
     warn_cert_expire = nil
     if config[:ssl]

@@ -15,7 +15,10 @@ Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
   s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
-  s.description            = 'Sensu plugins for various http monitors and metrics'
+  s.description            = 'This plugin provides native HTTP instrumentation
+                              for monitoring and metrics collection, including:
+                              response code, JSON response, HTTP last modified,
+                              SSL expiry, and metrics via `curl`.'
   s.email                  = '<sensu-users@googlegroups.com>'
   s.executables            = Dir.glob('bin/**/*.rb').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
@@ -39,13 +42,13 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'sensu-plugin', '1.2.0'
 
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
-  s.add_development_dependency 'rubocop',                   '0.30'
-  s.add_development_dependency 'rspec',                     '~> 3.1'
   s.add_development_dependency 'bundler',                   '~> 1.7'
-  s.add_development_dependency 'rake',                      '~> 10.0'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
   s.add_development_dependency 'github-markup',             '~> 1.3'
-  s.add_development_dependency 'redcarpet',                 '~> 3.2'
-  s.add_development_dependency 'yard',                      '~> 0.8'
   s.add_development_dependency 'pry',                       '~> 0.10'
+  s.add_development_dependency 'rake',                      '~> 10.0'
+  s.add_development_dependency 'redcarpet',                 '~> 3.2'
+  s.add_development_dependency 'rspec',                     '~> 3.1'
+  s.add_development_dependency 'rubocop',                   '0.32.1'
+  s.add_development_dependency 'yard',                      '~> 0.8'
 end

@@ -13,13 +13,14 @@
  * bin/check-http-json.rb
  * bin/check-http.rb
  * bin/check-https-cert.rb
- * bin/metrics-curl.rb
  * bin/check-last-modified.rb
+ * bin/metrics-curl.rb
+ * bin/http-json-graphite.rb
 
 ## Usage
 
 ## Installation
 
-[Installation and Setup](https://github.com/sensu-plugins/documentation/blob/master/user_docs/installation_instructions.md)
+[Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
 ## Notes

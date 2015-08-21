@@ -3,8 +3,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
+## Unreleased
+- nothing
+
 ## 0.2.0 - 2015-07-30
+
+### Fixed
+- check-http.rb will no longer fail if the plugin timeout is longer than the net/http default timeout
+
+### Changed
+- updated Rubocop to `0.32.1`
+- put deps in alpha order
+- update documentation links
+
+### Added
 - Added a check for last modified time in HTTP headers
+- POST mode for check-http-json.rb
 
 ## [0.1.1] - 2015-07-14
 ### Changed
