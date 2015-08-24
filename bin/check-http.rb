@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby
+#!/usr/bin/env ruby
 #
 #   check-http
 #
@@ -215,7 +215,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     http = nil
 
     if config[:no_proxy]
-      http = Net::HTTP.new(config[:host], config[:port], nil, nil)
+      http = Net::HTTP.new(config[:host], config[:port])
     elsif config[:proxy_url]
       proxy_uri = URI.parse(config[:proxy_url])
       if proxy_uri.host.nil?
@@ -228,6 +228,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     http.read_timeout = config[:timeout]
     http.open_timeout = config[:timeout]
     http.ssl_timeout = config[:timeout]
+    http.continue_timeout = config[:timeout]
+    http.keep_alive_timeout = config[:timeout]
 
     warn_cert_expire = nil
     if config[:ssl]
@@ -260,7 +262,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
             Net::HTTP::Post.new(config[:request_uri], 'User-Agent' => config[:ua])
           end
 
-    if !config[:user].nil? && !config[:password].nil?
+    unless config[:user].nil? && !config[:password].nil?
       req.basic_auth config[:user], config[:password]
     end
     if config[:header]
@@ -293,6 +295,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     size = res.body.nil? ? '0' : res.body.size
 
+    handle_response(res, size, body)
+  end
+
+  def handle_response(res, size, body)
     case res.code
     when /^2/
       if config[:redirectto]

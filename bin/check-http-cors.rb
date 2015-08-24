@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-#   check-http-json
+#   check-http-cors
 #
 # DESCRIPTION:
 #   Takes either a URL or a combination of host/path/query/port/ssl, and checks
@@ -16,35 +16,36 @@
 # DEPENDENCIES:
 #   gem: sensu-plugin
 #   gem: json
+#   gem: net/http
 #
 # USAGE:
 #   #YELLOW
+#
+# EXAMPLE:
+#   # simple key access
+#     $ ruby plugins/http/check-http-json.rb -u https://example.com/cors_resource -O "Origin:http://dummy"
 #
 # NOTES:
 #   Based on Check HTTP by Sonian Inc.
 #
 # LICENSE:
-#   Copyright 2013 Matt Revell <nightowlmatt@gmail.com>
+#   Copyright 2015 Alexander Paz <alexjpaz@gmail.com>
 #   Released under the same terms as Sensu (the MIT license); see LICENSE
 #   for details.
 #
 
+require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'json'
 require 'net/http'
 require 'net/https'
 
-#
-# Check JSON
-#
-class CheckJson < Sensu::Plugin::Check::CLI
+class CheckCORS < Sensu::Plugin::Check::CLI
   option :url, short: '-u URL'
   option :host, short: '-h HOST'
   option :path, short: '-p PATH'
   option :query, short: '-q QUERY'
   option :port, short: '-P PORT', proc: proc(&:to_i)
-  option :method, short: '-m GET|POST'
-  option :postbody, short: '-b /file/with/post/body'
   option :header, short: '-H HEADER', long: '--header HEADER'
   option :ssl, short: '-s', boolean: true, default: false
   option :insecure, short: '-k', boolean: true, default: false
@@ -73,7 +74,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     end
 
     begin
-      Timeout.timeout(config[:timeout]) do
+      timeout(config[:timeout]) do
         acquire_resource
       end
     rescue Timeout::Error
@@ -83,14 +84,35 @@ class CheckJson < Sensu::Plugin::Check::CLI
     end
   end
 
-  def json_valid?(str)
-    JSON.parse(str)
-    return true
-  rescue JSON::ParserError
-    return false
+  def cors?(res)
+    headers = {}
+
+    if config[:header]
+      config[:header].split(',').each do |header|
+        h, v = header.split(':', 2)
+        headers[h] = v.strip
+      end
+    end
+
+    res['Access-Control-Allow-Origin'] == headers['Origin']
   end
 
   def acquire_resource
+    res = request_http
+
+    case res.code
+    when /^2/
+      if cors?(res)
+        ok 'Request has matching CORS headers'
+      else
+        critical 'Response does not have valid CORS headers'
+      end
+    else
+      critical res.code
+    end
+  end
+
+  def request_http
     http = Net::HTTP.new(config[:host], config[:port])
 
     if config[:ssl]
@@ -104,45 +126,18 @@ class CheckJson < Sensu::Plugin::Check::CLI
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if config[:insecure]
     end
 
-    req = if config[:method] == 'POST'
-            Net::HTTP::Post.new([config[:path], config[:query]].compact.join('?'))
-          else
-            Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
-          end
-    if config[:postbody]
-      post_body = IO.readlines(config[:postbody])
-      req.body = post_body.join
-    end
+    req = Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
     unless config[:user].nil? && !config[:password].nil?
       req.basic_auth config[:user], config[:password]
     end
+
     if config[:header]
       config[:header].split(',').each do |header|
         h, v = header.split(':', 2)
         req[h] = v.strip
       end
     end
-    res = http.request(req)
 
-    critical res.code unless res.code =~ /^2/
-    critical 'invalid JSON from request' unless json_valid?(res.body)
-    ok 'valid JSON returned' if config[:key].nil? && config[:value].nil?
-
-    json = JSON.parse(res.body)
-
-    begin
-      keys = config[:key].scan(/(?:\\\.|[^.])+/).map { |key| key.gsub(/\\./, '.') }
-
-      leaf = keys.reduce(json) do |tree, key|
-        raise "could not find key: #{config[:key]}" unless tree.key?(key)
-        tree[key]
-      end
-
-      raise "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
-
-      ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
-    rescue => e
-      critical "key check failed: #{e}"
-    end
+    http.request(req)
   end
 end
