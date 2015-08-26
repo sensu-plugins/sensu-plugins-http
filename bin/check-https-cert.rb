@@ -52,11 +52,21 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
          proc: proc(&:to_i),
          description: 'Critical EXPIRE days before cert expires'
 
+  option :insecure,
+         short: '-k',
+         boolean: true,
+         description: 'Enabling insecure connections',
+         default: false
+
   def run
     uri = URI.parse(config[:url])
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    if config[:insecure]
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    else
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    end
 
     http.start do |h|
       @cert = h.peer_cert
@@ -74,6 +84,7 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
     end
 
   rescue
-    critical "Could not connect to #{config[:url]}"
+    message "Could not connect to #{config[:url]}"
+    exit 1
   end
 end
