@@ -84,7 +84,6 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
     end
 
   rescue
-    message "Could not connect to #{config[:url]}"
-    exit 1
+    critical "Could not connect to #{config[:url]}"
   end
 end
