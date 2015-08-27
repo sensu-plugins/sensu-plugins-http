@@ -90,7 +90,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     return false
   end
 
-  def acquire_resource # rubocop:disable all
+  def acquire_resource
     http = Net::HTTP.new(config[:host], config[:port])
 
     if config[:ssl]

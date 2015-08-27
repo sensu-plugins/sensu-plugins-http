@@ -15,9 +15,8 @@ shared_context :plugin_stub do
 
         def unknown(*); end
       end
-      # rubocop:disable all
-      @@autorun = PluginStub
-      # rubocop:enable all
+
+      @@autorun = PluginStub # rubocop:disable Style/ClassVars
     end
   end
 end
