@@ -25,11 +25,41 @@
 require 'sensu-plugin/check/cli'
 require 'net/https'
 require 'time'
+require 'aws-sdk-core'
+require 'sensu-plugins-http'
 
 #
 # Checks that redirection links can be followed in a set number of requests.
 #
 class CheckLastModified < Sensu::Plugin::Check::CLI
+  include Common
+  option :aws_access_key,
+         short:       '-a AWS_ACCESS_KEY',
+         long:        '--aws-access-key AWS_ACCESS_KEY',
+         description: "AWS Access Key. Either set ENV['AWS_ACCESS_KEY'] or provide it as an option",
+         default:     ENV['AWS_ACCESS_KEY']
+
+  option :aws_secret_access_key,
+         short:       '-k AWS_SECRET_KEY',
+         long:        '--aws-secret-access-key AWS_SECRET_KEY',
+         description: "AWS Secret Access Key. Either set ENV['AWS_SECRET_KEY'] or provide it as an option",
+         default:     ENV['AWS_SECRET_KEY']
+
+  option :aws_region,
+         short:       '-r AWS_REGION',
+         long:        '--aws-region REGION',
+         description: 'AWS Region (defaults to us-east-1).',
+         default:     'us-east-1'
+
+  option :s3_config_bucket,
+         short:       '-s S3_CONFIG_FILE',
+         long:        '--s3-config-file S3_CONFIG_FILE',
+         description: 'S3 config bucket'
+
+  option :s3_config_key,
+         short:       '-k S3_CONFIG_KEY',
+         long:        '--s3-config-KEY S3_CONFIG_KEY',
+         description: 'S3 config key'
   option :url,
           short: '-u URL',
           long: '--url URL',
@@ -91,6 +121,10 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
   end
 
   def run
+      
+    aws_config
+    merge_s3_config
+
     url = config[:url]
 
     #Validate arguments

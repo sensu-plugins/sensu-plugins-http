@@ -25,6 +25,8 @@
 require 'sensu-plugin/check/cli'
 require 'net/https'
 require 'time'
+require 'aws-sdk-core'
+require 'sensu-plugins-http'
 
 #
 # Checks the last modified time of a file to verify it has been updated with a
