@@ -86,14 +86,12 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
       when Net::HTTPSuccess     then response
       when Net::HTTPRedirection then follow_uri(response['location'], total_redirects - 1, get_redirects - 1)
       else
-        puts "#{response}"
         critical 'Http Error'
       end
     else
       case response
       when Net::HTTPSuccess     then response
       else
-        puts "#{response}"
         critical 'Http Error'
       end
     end
