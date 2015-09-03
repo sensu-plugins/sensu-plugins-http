@@ -26,6 +26,7 @@ require 'sensu-plugin/check/cli'
 require 'net/https'
 require 'time'
 require 'aws-sdk-core'
+require 'json'
 require 'sensu-plugins-http'
 
 #
@@ -60,6 +61,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
          short:       '-k S3_CONFIG_KEY',
          long:        '--s3-config-KEY S3_CONFIG_KEY',
          description: 'S3 config key'
+
   option :url,
           short: '-u URL',
           long: '--url URL',
@@ -121,7 +123,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
   end
 
   def run
-      
+
     aws_config
     merge_s3_config
 

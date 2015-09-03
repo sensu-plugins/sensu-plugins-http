@@ -26,6 +26,7 @@ require 'sensu-plugin/check/cli'
 require 'net/https'
 require 'time'
 require 'aws-sdk-core'
+require 'json'
 require 'sensu-plugins-http'
 
 #
