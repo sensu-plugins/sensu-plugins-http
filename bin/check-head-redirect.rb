@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 #
-#   check-fleet-units
+#   check-head-redirect
 #
 # DESCRIPTION:
 #
@@ -18,7 +18,7 @@
 # NOTES:
 #
 # LICENSE:
-#   Barry Martin <nyxcharon@gmail.com>
+#   Leon Gibat <brendan.gibat@gmail.com>
 #   Released under the same terms as Sensu (the MIT license); see LICENSE
 #   for details.
 #
@@ -27,8 +27,7 @@ require 'net/https'
 require 'time'
 
 #
-# Checks the last modified time of a file to verify it has been updated with a
-# specified threshold.
+# Checks that redirection links can be followed in a set number of requests.
 #
 class CheckLastModified < Sensu::Plugin::Check::CLI
   option :url,
@@ -45,11 +44,6 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
           short: '-a PASS',
           long: '--password PASS',
           description: 'A password to use for the username'
-
-  option :threshold,
-          short: '-t TIME',
-          long: '--time TIME',
-          description: 'The time in seconds the file should be updated by'
 
   option :follow_redirects,
           short: '-r FOLLOW_REDIRECTS',
@@ -80,7 +74,6 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     end
 
     response = http.request(request)
-
     if total_redirects > 0
       case response
       when Net::HTTPSuccess     then response
@@ -89,39 +82,23 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
         critical 'Http Error'
       end
     else
-      response
+      case response
+      when Net::HTTPSuccess     then ok
+      else
+        critical 'Http Error'
+      end
     end
   end
 
   def run
     url = config[:url]
-    threshold = config[:threshold]
 
     #Validate arguments
     if not url
       unknown "No URL specified"
     end
 
-    if not threshold
-      unknown "No threshold specified"
-    end
-
-    response = follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get])
-
-    #Build a request from user options and then request it
-    if response.header['last-modified'] == nil
-      critical 'Http Error'
-    end
-
-    #Get timestamp of file and local timestamp and compare (Both in UTC)
-    file_stamp = Time.parse(response.header['last-modified']).getgm
-    local_stamp = Time.now.getgm
-
-    if (local_stamp - file_stamp).to_i <= threshold.to_i
-      ok 'Last modified time OK'
-    else
-      critical 'Last modified time greater than threshold'
-    end
+    follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get])
 
   end
 end
