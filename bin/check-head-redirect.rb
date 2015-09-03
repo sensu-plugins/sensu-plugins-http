@@ -76,7 +76,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     response = http.request(request)
     if total_redirects > 0
       case response
-      when Net::HTTPSuccess     then response
+      when Net::HTTPSuccess     then ok
       when Net::HTTPRedirection then follow_uri(response['location'], total_redirects - 1, get_redirects - 1)
       else
         critical 'Http Error'
