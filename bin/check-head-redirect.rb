@@ -78,7 +78,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
           description: 'A password to use for the username'
 
   option :follow_redirects,
-          short: '-r FOLLOW_REDIRECTS',
+          short: '-R FOLLOW_REDIRECTS',
           long: '--redirect FOLLOW_REDIRECTS',
           proc: proc(&:to_i),
           default: 0,
