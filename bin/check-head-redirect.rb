@@ -91,25 +91,37 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
           default: 0,
           description: 'Follow first <N> redirects with GET requests'
 
-  def follow_uri(uri, total_redirects, get_redirects)
+  option :auth_first_only,
+          short: '-A',
+          long: '--auth-first-only',
+          default: true,
+          description: 'Use basic auth on first request only'
+
+  def follow_uri(uri, total_redirects, get_redirects, auth_count)
     location = URI(uri)
     http = Net::HTTP.new(location.host, location.port)
+
+    if location.port == 443
+      http.use_ssl = true
+    end
+
     if get_redirects > 0
       request = Net::HTTP::Get.new(location.request_uri)
     else
       request = Net::HTTP::Head.new(location.request_uri)
     end
 
-    if config[:user] and config[:password] and total_redirects == config[:follow_redirects]
+    if auth_count > 0 && config[:user] and config[:password] and total_redirects == config[:follow_redirects]
       http.use_ssl = true
       request.basic_auth(config[:user], config[:password])
+      auth_count -= 1
     end
 
     response = http.request(request)
     if total_redirects > 0
       case response
       when Net::HTTPSuccess     then ok
-      when Net::HTTPRedirection then follow_uri(response['location'], total_redirects - 1, get_redirects - 1)
+      when Net::HTTPRedirection then follow_uri(response['location'], total_redirects - 1, get_redirects - 1, auth_count)
       else
         critical 'Http Error'
       end
@@ -134,7 +146,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
       unknown "No URL specified"
     end
 
-    follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get])
+    follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get], config[:auth_first_only] ? 1 : config[:follow_redirects])
 
   end
 end
