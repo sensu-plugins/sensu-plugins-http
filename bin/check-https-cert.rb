@@ -14,7 +14,7 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: nrt-https
+#   gem: net-https
 #
 # USAGE:
 #   #YELLOW
