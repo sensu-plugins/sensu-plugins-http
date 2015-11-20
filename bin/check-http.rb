@@ -223,6 +223,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
           if ssl_context.current_cert.not_after <= expire_warn_date
             warn_cert_expire = ssl_context.current_cert.not_after
           end
+
+          _preverify_ok
         end
       end
     end
