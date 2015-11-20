@@ -219,12 +219,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       unless config[:expiry].nil?
         expire_warn_date = Time.now + (config[:expiry] * 60 * 60 * 24)
         # We can't raise inside the callback, have to check when we finish.
-        http.verify_callback = proc do |_preverify_ok, ssl_context|
+        http.verify_callback = proc do |preverify_ok, ssl_context|
           if ssl_context.current_cert.not_after <= expire_warn_date
             warn_cert_expire = ssl_context.current_cert.not_after
           end
 
-          _preverify_ok
+          preverify_ok
         end
       end
     end
