@@ -6,10 +6,11 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## Unreleased
 - nothing
 
-## 0.2.0 - 2015-07-30
+## 0.2.0 - 2015-11-17
 
 ### Fixed
 - check-http.rb will no longer fail if the plugin timeout is longer than the net/http default timeout
+- check-http-json.rb will no longer fail when comparing strings
 
 ### Changed
 - updated Rubocop to `0.32.1`
@@ -19,6 +20,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Added a check for last modified time in HTTP headers
 - POST mode for check-http-json.rb
+- Output a message when check-https-cert.rb cannot establish a connection
+- insecure option for check-https-cert.rb to skip SSL cert check
 
 ## [0.1.1] - 2015-07-14
 ### Changed

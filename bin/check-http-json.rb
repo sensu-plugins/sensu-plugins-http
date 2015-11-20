@@ -90,7 +90,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     return false
   end
 
-  def acquire_resource # rubocop:disable all
+  def acquire_resource
     http = Net::HTTP.new(config[:host], config[:port])
 
     if config[:ssl]
@@ -138,7 +138,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
         tree[key]
       end
 
-      fail "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf == config[:value]
+      fail "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
 
       ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
     rescue => e
