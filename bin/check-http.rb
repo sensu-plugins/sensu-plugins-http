@@ -190,7 +190,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     end
   end
 
-  def acquire_resource # rubocop:disable all
+  def acquire_resource
     http = nil
 
     if config[:no_proxy]
