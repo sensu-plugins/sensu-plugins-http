@@ -194,7 +194,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     http = nil
 
     if config[:no_proxy]
-      http = Net::HTTP.new(config[:host], config[:port], nil, nil)
+      http = Net::HTTP.new(config[:host], config[:port])
     elsif config[:proxy_url]
       proxy_uri = URI.parse(config[:proxy_url])
       if proxy_uri.host.nil?
@@ -207,6 +207,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     http.read_timeout = config[:timeout]
     http.open_timeout = config[:timeout]
     http.ssl_timeout = config[:timeout]
+    http.continue_timeout = config[:timeout]
+    http.keep_alive_timeout = config[:timeout]
 
     warn_cert_expire = nil
     if config[:ssl]
