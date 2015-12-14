@@ -197,6 +197,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       http = Net::HTTP.new(config[:host], config[:port], nil, nil)
     elsif config[:proxy_url]
       proxy_uri = URI.parse(config[:proxy_url])
+      if proxy_uri.host.nil?
+        unknown 'Invalid proxy url specified'
+      end
       http = Net::HTTP.new(config[:host], config[:port], proxy_uri.host, proxy_uri.port)
     else
       http = Net::HTTP.new(config[:host], config[:port])
