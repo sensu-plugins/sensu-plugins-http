@@ -4,10 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## Unreleased
-- Added validation check for proxy url option
+
+## 0.2.1 - 2015-12-14
+### Added
+- Added validation check for proxy url option in check-http.rb
+
+### Fixed
+- Fixed SSL verification error raised erroneously when using -e flag with check-http.rb
 
 ## 0.2.0 - 2015-11-17
-
 ### Fixed
 - check-http.rb will no longer fail if the plugin timeout is longer than the net/http default timeout
 - check-http-json.rb will no longer fail when comparing strings
