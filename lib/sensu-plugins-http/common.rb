@@ -6,6 +6,7 @@ module Common
   end
 
   def aws_config
+    return if config[:s3_config_bucket].nil? || config[:s3_config_key].nil?
     Aws.config.update(
       credentials: Aws::Credentials.new(config[:aws_access_key_id], config[:aws_secret_access_key])
     ) if config[:aws_access_key_id] && config[:aws_secret_access_key]
