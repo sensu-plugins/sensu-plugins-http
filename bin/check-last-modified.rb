@@ -64,44 +64,44 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
          description: 'S3 config key'
 
   option :url,
-          short: '-u URL',
-          long: '--url URL',
-          description: 'The URL of the file to be checked'
+         short: '-u URL',
+         long: '--url URL',
+         description: 'The URL of the file to be checked'
 
   option :user,
-          short: '-U USER',
-          long: '--username USER',
-          description: 'A username to connect as'
+         short: '-U USER',
+         long: '--username USER',
+         description: 'A username to connect as'
 
   option :password,
-          short: '-a PASS',
-          long: '--password PASS',
-          description: 'A password to use for the username'
+         short: '-a PASS',
+         long: '--password PASS',
+         description: 'A password to use for the username'
 
   option :threshold,
-          short: '-t TIME',
-          long: '--time TIME',
-          description: 'The time in seconds the file should be updated by'
+         short: '-t TIME',
+         long: '--time TIME',
+         description: 'The time in seconds the file should be updated by'
 
   option :follow_redirects,
-          short: '-R FOLLOW_REDIRECTS',
-          long: '--redirect FOLLOW_REDIRECTS',
-          proc: proc(&:to_i),
-          default: 0,
-          description: 'Follow first <N> redirects'
+         short: '-R FOLLOW_REDIRECTS',
+         long: '--redirect FOLLOW_REDIRECTS',
+         proc: proc(&:to_i),
+         default: 0,
+         description: 'Follow first <N> redirects'
 
   option :follow_redirects_with_get,
-          short: '-g GET_REDIRECTS',
-          long: '--get-redirects GET_REDIRECTS',
-          proc: proc(&:to_i),
-          default: 0,
-          description: 'Follow first <N> redirects with GET requests'
+         short: '-g GET_REDIRECTS',
+         long: '--get-redirects GET_REDIRECTS',
+         proc: proc(&:to_i),
+         default: 0,
+         description: 'Follow first <N> redirects with GET requests'
 
   option :auth_first_only,
-          short: '-A',
-          long: '--auth-first-only',
-          default: true,
-          description: 'Use basic auth on first request only'
+         short: '-A',
+         long: '--auth-first-only',
+         default: true,
+         description: 'Use basic auth on first request only'
 
   def follow_uri(uri, total_redirects, get_redirects, auth_count)
     location = URI(uri)
