@@ -148,7 +148,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     url = config[:url]
     threshold = config[:threshold]
 
-    #Validate arguments
+    # Validate arguments
     unless url
       unknown 'No URL specified'
     end
@@ -159,12 +159,12 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
 
     response = follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get], config[:auth_first_only] ? 1 : config[:follow_redirects])
 
-    #Build a request from user options and then request it
+    # Build a request from user options and then request it
     if response.header['last-modified'].nil?
       critical 'Http Error'
     end
 
-    #Get timestamp of file and local timestamp and compare (Both in UTC)
+    # Get timestamp of file and local timestamp and compare (Both in UTC)
     file_stamp = Time.parse(response.header['last-modified']).getgm
     local_stamp = Time.now.getgm
 
