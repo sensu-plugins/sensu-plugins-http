@@ -117,7 +117,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
       request = Net::HTTP::Head.new(location.request_uri)
     end
 
-    if auth_count > 0 && config[:user] and config[:password] and total_redirects == config[:follow_redirects]
+    if auth_count > 0 && config[:user] && config[:password] && total_redirects == config[:follow_redirects]
       http.use_ssl = true
       request.basic_auth(config[:user], config[:password])
       auth_count -= 1
@@ -173,6 +173,5 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     else
       critical 'Last modified time greater than threshold'
     end
-
   end
 end
