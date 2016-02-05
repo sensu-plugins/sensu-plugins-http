@@ -84,8 +84,8 @@ class CheckCORS < Sensu::Plugin::Check::CLI
     end
   end
 
-  def has_cors?(res)
-    headers = Hash.new
+  def cors?(res)
+    headers = {}
 
     if config[:header]
       config[:header].split(',').each do |header|
@@ -94,7 +94,7 @@ class CheckCORS < Sensu::Plugin::Check::CLI
       end
     end
 
-    res["Access-Control-Allow-Origin"] == headers["Origin"]
+    res['Access-Control-Allow-Origin'] == headers['Origin']
   end
 
   def acquire_resource
@@ -102,7 +102,7 @@ class CheckCORS < Sensu::Plugin::Check::CLI
 
     case res.code
     when /^2/
-      if has_cors?(res)
+      if cors?(res)
         ok 'Request has matching CORS headers'
       else
         critical 'Response does not have valid CORS headers'
