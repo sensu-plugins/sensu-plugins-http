@@ -59,7 +59,7 @@ class CheckHeadRedirect < Sensu::Plugin::Check::CLI
 
   option :s3_config_key,
          short:       '-k S3_CONFIG_KEY',
-         long:        '--s3-config-KEY S3_CONFIG_KEY',
+         long:        '--s3-config-key S3_CONFIG_KEY',
          description: 'S3 config key'
 
   option :url,
