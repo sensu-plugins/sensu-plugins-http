@@ -234,7 +234,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     req = Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
 
-    if !config[:user].nil? && !config[:password].nil?
+    unless config[:user].nil? && !config[:password].nil?
       req.basic_auth config[:user], config[:password]
     end
     if config[:header]

@@ -149,11 +149,11 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     threshold = config[:threshold]
 
     #Validate arguments
-    if !url
+    unless url
       unknown 'No URL specified'
     end
 
-    if !threshold
+    unless threshold
       unknown 'No threshold specified'
     end
 

@@ -141,7 +141,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     url = config[:url]
 
     #Validate arguments
-    if !url
+    unless url
       unknown 'No URL specified'
     end
 
