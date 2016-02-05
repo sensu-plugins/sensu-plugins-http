@@ -32,7 +32,7 @@ require 'sensu-plugins-http'
 #
 # Checks that redirection links can be followed in a set number of requests.
 #
-class CheckLastModified < Sensu::Plugin::Check::CLI
+class CheckHeadRedirect < Sensu::Plugin::Check::CLI
   include Common
   option :aws_access_key_id,
          short:       '-a AWS_ACCESS_KEY_ID',
@@ -53,8 +53,8 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
          default:     'us-east-1'
 
   option :s3_config_bucket,
-         short:       '-s S3_CONFIG_FILE',
-         long:        '--s3-config-file S3_CONFIG_FILE',
+         short:       '-s S3_CONFIG_BUCKET',
+         long:        '--s3-config-bucket S3_CONFIG_BUCKET',
          description: 'S3 config bucket'
 
   option :s3_config_key,
