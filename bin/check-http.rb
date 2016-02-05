@@ -265,6 +265,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     size = res.body.nil? ? '0' : res.body.size
 
+    handle_response(res, size, body)
+  end
+
+  def handle_response(res, size, body)
     case res.code
     when /^2/
       if config[:redirectto]
@@ -298,7 +302,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       critical(res.code + body) unless config[:response_code]
     else
       warning(res.code + body) unless config[:response_code]
-  end
+    end
 
     # #YELLOW
     if config[:response_code] # rubocop:disable GuardClause
