@@ -135,7 +135,6 @@ class CheckHeadRedirect < Sensu::Plugin::Check::CLI
   end
 
   def run
-    aws_config
     merge_s3_config
 
     url = config[:url]

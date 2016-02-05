@@ -6,7 +6,6 @@ module Common
   end
 
   def aws_config
-    return if config[:s3_config_bucket].nil? || config[:s3_config_key].nil?
     Aws.config.update(
       credentials: Aws::Credentials.new(config[:aws_access_key_id], config[:aws_secret_access_key])
     ) if config[:aws_access_key_id] && config[:aws_secret_access_key]
@@ -18,6 +17,9 @@ module Common
 
   def merge_s3_config
     return if config[:s3_config_bucket].nil? || config[:s3_config_key].nil?
+
+    aws_config
+
     s3 = Aws::S3::Client.new
     begin
       resp = s3.get_object(bucket: config[:s3_config_bucket], key: config[:s3_config_key])
