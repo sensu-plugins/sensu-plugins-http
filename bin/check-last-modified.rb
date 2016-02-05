@@ -38,13 +38,13 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
   option :aws_access_key,
          short:       '-a AWS_ACCESS_KEY',
          long:        '--aws-access-key AWS_ACCESS_KEY',
-         description: "AWS Access Key. Either set ENV['AWS_ACCESS_KEY'] or provide it as an option",
+         description: 'AWS Access Key. Either set ENV[\'AWS_ACCESS_KEY\'] or provide it as an option',
          default:     ENV['AWS_ACCESS_KEY']
 
   option :aws_secret_access_key,
          short:       '-k AWS_SECRET_KEY',
          long:        '--aws-secret-access-key AWS_SECRET_KEY',
-         description: "AWS Secret Access Key. Either set ENV['AWS_SECRET_KEY'] or provide it as an option",
+         description: 'AWS Secret Access Key. Either set ENV[\'AWS_SECRET_KEY\'] or provide it as an option',
          default:     ENV['AWS_SECRET_KEY']
 
   option :aws_region,
@@ -149,18 +149,18 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
     threshold = config[:threshold]
 
     #Validate arguments
-    if not url
-      unknown "No URL specified"
+    if !url
+      unknown 'No URL specified'
     end
 
-    if not threshold
-      unknown "No threshold specified"
+    if !threshold
+      unknown 'No threshold specified'
     end
 
     response = follow_uri(url, config[:follow_redirects], config[:follow_redirects_with_get], config[:auth_first_only] ? 1 : config[:follow_redirects])
 
     #Build a request from user options and then request it
-    if response.header['last-modified'] == nil
+    if response.header['last-modified'].nil?
       critical 'Http Error'
     end
 
