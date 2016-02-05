@@ -49,7 +49,7 @@ class CheckLastModified < Sensu::Plugin::Check::CLI
   option :aws_region,
          short:       '-r AWS_REGION',
          long:        '--aws-region REGION',
-         description: 'AWS Region (defaults to us-east-1).',
+         description: 'AWS Region (defaults to us-east-1)',
          default:     'us-east-1'
 
   option :s3_config_bucket,
