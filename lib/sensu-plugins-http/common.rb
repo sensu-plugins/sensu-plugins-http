@@ -27,5 +27,4 @@ module Common
           end
       end
   end
-
 end
