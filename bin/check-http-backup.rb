@@ -245,15 +245,15 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     end
     res = http.request(req)
 
-    if config[:whole_response]
-      body = "\n" + res.body
-    else
-      if config[:response_bytes]
-        body = "\n" + res.body[0..config[:response_bytes]]
-      else
-        body = ''
-      end
-    end
+    body = if config[:whole_response]
+             "\n" + res.body
+           else
+             body = if config[:response_bytes] # rubocop:disable Lint/UselessAssignment
+                      "\n" + res.body[0..config[:response_bytes]]
+                    else
+                      ''
+                    end
+           end
 
     if config[:require_bytes] && res.body.length != config[:require_bytes]
       critical "Response was #{res.body.length} bytes instead of #{config[:require_bytes]}" + body
@@ -298,10 +298,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       critical(res.code + body) unless config[:response_code]
     else
       warning(res.code + body) unless config[:response_code]
-  end
+    end
 
-    # #YELLOW
-    if config[:response_code] # rubocop:disable GuardClause
+    if config[:response_code]
       if config[:response_code] == res.code
         ok "#{res.code}, #{size} bytes" + body
       else
