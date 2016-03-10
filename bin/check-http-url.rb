@@ -283,7 +283,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
           critical "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
         end
       else
-   puts("#{config[:scheme]} 1 #{@timestamp}" + body) unless config[:response_code]
+   puts("#{config[:scheme]} 0 #{@timestamp}" + body) unless config[:response_code]
 exit   
 end
     when /^3/
@@ -301,11 +301,11 @@ end
           end
         end
       else
-         puts("#{config[:scheme]} 0 #{@timestamp}" + body) unless config[:response_code]
+         puts("#{config[:scheme]} 1 #{@timestamp}" + body) unless config[:response_code]
 exit
       end
     when /^4/, /^5/
-     puts("#{config[:scheme]} 0 #{@timestamp}" + body) unless config[:response_code]
+     puts("#{config[:scheme]} 1 #{@timestamp}" + body) unless config[:response_code]
 exit
     else
       warning(res.code + body) unless config[:response_code]
