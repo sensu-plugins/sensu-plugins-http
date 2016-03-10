@@ -240,7 +240,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     if config[:header]
       config[:header].split(',').each do |header|
         h, v = header.split(':', 2)
-        req[h] = v.strip
+        req[h.strip] = v.strip
       end
     end
     res = http.request(req)
