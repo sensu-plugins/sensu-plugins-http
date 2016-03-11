@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 - Support comma+space-separated headers in check-http.rb
+- Support POST requests in check-http.rb
 
 ## [0.2.1] - 2015-12-14
 ### Added
