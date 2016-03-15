@@ -65,10 +65,22 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          long: '--request-uri PATH',
          description: 'Specify a uri path'
 
+  option :method,
+         short: '-m GET|POST',
+         long: '--method GET|POST',
+         description: 'Specify a GET or POST operation; defaults to GET',
+         in: %w(GET POST),
+         default: 'GET'
+
   option :header,
          short: '-H HEADER',
          long: '--header HEADER',
-         description: 'Check for a HEADER'
+         description: 'Send one or more comma-separated headers with the request'
+
+  option :body,
+         short: '-b BODY',
+         long: '--body BODY',
+         description: 'Send a body string with the request'
 
   option :ssl,
          short: '-s',
@@ -232,7 +244,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       end
     end
 
-    req = Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
+    req = case config[:method]
+          when 'GET'
+            Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
+          when 'POST'
+            Net::HTTP::Post.new(config[:request_uri], 'User-Agent' => config[:ua])
+          end
 
     if !config[:user].nil? && !config[:password].nil?
       req.basic_auth config[:user], config[:password]
@@ -240,9 +257,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     if config[:header]
       config[:header].split(',').each do |header|
         h, v = header.split(':', 2)
-        req[h] = v.strip
+        req[h.strip] = v.strip
       end
     end
+    req.body = config[:body] if config[:body]
+
     res = http.request(req)
 
     body = if config[:whole_response]

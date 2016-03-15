@@ -51,4 +51,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec',                     '~> 3.1'
   s.add_development_dependency 'rubocop',                   '~> 0.37'
   s.add_development_dependency 'yard',                      '~> 0.8'
+  s.add_development_dependency 'test-kitchen',              '~> 1.6'
+  s.add_development_dependency 'kitchen-vagrant',           '~> 0.19'
+  s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
+  s.add_development_dependency 'net-ssh',                   '~> 2.9'
 end
