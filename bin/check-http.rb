@@ -16,7 +16,17 @@
 #   gem: sensu-plugin
 #
 # USAGE:
-#   #YELLOW
+#   Basic HTTP check - expect a 200 response
+#   check-http.rb -u http://my.site.com
+#
+#   Pattern check - expect a 200 response and the string 'OK' in the body
+#   check-http.rb -u http://my.site.com/health -q 'OK'
+#
+#   Check response code - expect a 301 response
+#   check-http.rb -u https://my.site.com/redirect --response-code 301 -r
+#
+#   Use a proxy to check a URL
+#   check-http.rb -u https://www.google.com --proxy-url http://my.proxy.com:3128
 #
 # NOTES:
 #
