@@ -7,6 +7,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - Support comma+space-separated headers in check-http.rb
 - Support POST requests in check-http.rb
 - Add a Test Kitchen config and BATS tests for CI
+- metrics-curl now returns the http_code from the request
+- metrics-curl will now exit with a warning if the curl call returns non zero
 
 ## [0.2.1] - 2015-12-14
 ### Added
