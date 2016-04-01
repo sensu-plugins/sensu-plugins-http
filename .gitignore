@@ -15,6 +15,7 @@ mkmf.log
 .vagrant/*
 .DS_Store
 *.gem
+.kitchen/
 
 #Intellij files
 *.iml

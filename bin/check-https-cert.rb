@@ -62,11 +62,11 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
     uri = URI.parse(config[:url])
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    if config[:insecure]
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    else
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    end
+    http.verify_mode = if config[:insecure]
+                         OpenSSL::SSL::VERIFY_NONE
+                       else
+                         OpenSSL::SSL::VERIFY_PEER
+                       end
 
     http.start do |h|
       @cert = h.peer_cert

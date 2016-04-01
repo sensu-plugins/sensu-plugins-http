@@ -104,11 +104,11 @@ class CheckJson < Sensu::Plugin::Check::CLI
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if config[:insecure]
     end
 
-    if config[:method] == 'POST'
-      req = Net::HTTP::Post.new([config[:path], config[:query]].compact.join('?'))
-    else
-      req = Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
-    end
+    req = if config[:method] == 'POST'
+            Net::HTTP::Post.new([config[:path], config[:query]].compact.join('?'))
+          else
+            Net::HTTP::Get.new([config[:path], config[:query]].compact.join('?'))
+          end
     if config[:postbody]
       post_body = IO.readlines(config[:postbody])
       req.body = post_body.join
@@ -134,11 +134,11 @@ class CheckJson < Sensu::Plugin::Check::CLI
       keys = config[:key].scan(/(?:\\\.|[^.])+/).map { |key| key.gsub(/\\./, '.') }
 
       leaf = keys.reduce(json) do |tree, key|
-        fail "could not find key: #{config[:key]}" unless tree.key?(key)
+        raise "could not find key: #{config[:key]}" unless tree.key?(key)
         tree[key]
       end
 
-      fail "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
+      raise "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
 
       ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
     rescue => e

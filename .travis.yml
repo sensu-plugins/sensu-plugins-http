@@ -1,19 +1,39 @@
 language: ruby
+sudo: required
+dist: trusty
 cache:
-  - bundler
+- bundler
 install:
-  - bundle install
+- bundle install
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
+- 1.9.3
+- 2.0
+- 2.1
+- 2.2
 notifications:
   email:
     recipients:
-      - sensu-plugin@sensu-plugins.io
+    - sensu-plugin@sensu-plugins.io
     on_success: change
     on_failure: always
-
 script:
-  - 'bundle exec rake default'
+  - bundle exec rake default
+  - bundle exec kitchen test
+  - gem build sensu-plugins-http.gemspec
+  - gem install sensu-plugins-http-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: gEAG8w7v8luKjpTp1NvNQ3qMUoGpfsNWmBByhwXq+A/B2KeaLd5UnUSEFJIK2JkxLkTr1rIpiWxBQmuHKN+RReJm8nij0Awt+oHLKruWw3rOht+fnlXHlI67njbXwnmQPuG44SOX5tqesWzwMBd35dIrYNJyygvwSlDXIOQtHUA=
+  gem: sensu-plugins-http
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    repo: sensu-plugins/sensu-plugins-http
+
+env:
+  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
