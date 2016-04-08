@@ -22,6 +22,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Changed
 - Update to rubocop 0.37 and resolve issues
 
+### Removed
+- Remove Ruby 2.0 from travis tests
+
 ## [0.2.1] - 2015-12-14
 ### Added
 - Added validation check for proxy url option in check-http.rb
