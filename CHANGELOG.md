@@ -4,11 +4,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- Support comma+space-separated headers in check-http.rb
-- Support POST requests in check-http.rb
+
+## [0.3.0] - 2016-04-08
+### Added
+- Add `metrics-http-json-deep` plugin that generates metrics from a JSON endpoint
+- Support POST requests in `check-http.rb`
+- Support comma+space-separated headers in `check-http.rb`
 - Add a Test Kitchen config and BATS tests for CI
-- metrics-curl now returns the http_code from the request
-- metrics-curl will now exit with a warning if the curl call returns non zero
+- `metrics-curl` now returns the http_code from the request
+- `metrics-curl` will now exit with a warning if the curl call returns non zero
+- Add Ruby 2.3 to travis tests
+- Add usage examples for `check-http`
+
+### Fixed
+- Fix Ruby 2.3 deprecation warning on use of timeout (#35)
+
+### Changed
+- Update to rubocop 0.37 and resolve issues
 
 ## [0.2.1] - 2015-12-14
 ### Added
@@ -49,7 +61,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.2.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.1.0...0.1.1
