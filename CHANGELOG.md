@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [0.4.0] - 2016-04-26
+### Changed
+- Rename http-json-graphite -> metrics-json-graphite 
+
 ## [0.3.0] - 2016-04-08
 ### Added
 - Add `metrics-http-json-deep` plugin that generates metrics from a JSON endpoint
@@ -64,7 +68,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.1.1...0.2.0
