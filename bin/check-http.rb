@@ -215,7 +215,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     http = nil
 
     if config[:no_proxy]
-      http = Net::HTTP.new(config[:host], config[:port])
+      http = Net::HTTP.new(config[:host], config[:port], nil, nil)
     elsif config[:proxy_url]
       proxy_uri = URI.parse(config[:proxy_url])
       if proxy_uri.host.nil?
