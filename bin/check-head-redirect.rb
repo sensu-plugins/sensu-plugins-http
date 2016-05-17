@@ -105,11 +105,11 @@ class CheckHeadRedirect < Sensu::Plugin::Check::CLI
       http.use_ssl = true
     end
 
-    if get_redirects > 0
-      request = Net::HTTP::Get.new(location.request_uri)
-    else
-      request = Net::HTTP::Head.new(location.request_uri)
-    end
+    request = if get_redirects > 0
+                Net::HTTP::Get.new(location.request_uri)
+              else
+                Net::HTTP::Head.new(location.request_uri)
+              end
 
     if auth_count > 0 && config[:user] && config[:password] && total_redirects == config[:follow_redirects]
       http.use_ssl = true
@@ -127,7 +127,7 @@ class CheckHeadRedirect < Sensu::Plugin::Check::CLI
       end
     else
       case response
-      when Net::HTTPSuccess     then ok
+      when Net::HTTPSuccess then ok
       else
         critical 'Http Error'
       end
