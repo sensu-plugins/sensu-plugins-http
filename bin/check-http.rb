@@ -67,8 +67,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          short: '-P PORT',
          long: '--port PORT',
          proc: proc(&:to_i),
-         description: 'Select another port',
-         default: 80
+         description: 'Select another port'
 
   option :request_uri,
          short: '-p PATH',
