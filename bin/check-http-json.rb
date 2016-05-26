@@ -113,7 +113,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
       post_body = IO.readlines(config[:postbody])
       req.body = post_body.join
     end
-    unless config[:user].nil? && !config[:password].nil?
+    unless config[:user].nil? && config[:password].nil?
       req.basic_auth config[:user], config[:password]
     end
     if config[:header]
