@@ -201,7 +201,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     end
 
     begin
-      Timeout.timeout(config[:timeout]) do
+      Timeout.timeout(config[:timeout] + 10) do
         acquire_resource
       end
     rescue Timeout::Error
