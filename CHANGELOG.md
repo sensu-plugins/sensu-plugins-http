@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Fixed
 - Don't send basic auth when no password is supplied
+  Add `--negquery` to `check-http.rb` for query text that should not exist
 
 ## [0.4.0] - 2016-04-26
 ### Changed
