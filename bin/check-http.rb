@@ -315,10 +315,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
           critical "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
         end
       elsif config[:negpattern]
-        if res.body =~ /#{config[:pattern]}/
-          critical "#{res.code}, found /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
+        if res.body =~ /#{config[:negpattern]}/
+          critical "#{res.code}, found /#{config[:negpattern]}/ in #{size} bytes: #{res.body[0...200]}..."
         else
-          ok "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes" + body
+          ok "#{res.code}, did not find /#{config[:negpattern]}/ in #{size} bytes" + body
         end
       else
         ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
