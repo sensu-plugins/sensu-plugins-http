@@ -132,7 +132,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
   option :pattern,
          short: '-q PAT',
          long: '--query PAT',
-         description: 'Query for a specific pattern'
+         description: 'Query for a specific pattern that must exist'
+
+  option :negpattern,
+         short: '-n PAT',
+         long: '--negquery PAT',
+         description: 'Query for a specific pattern that must be absent'
 
   option :timeout,
          short: '-t SECS',
@@ -308,6 +313,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
           ok "#{res.code}, found /#{config[:pattern]}/ in #{size} bytes" + body
         else
           critical "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
+        end
+      elsif config[:negpattern]
+        if res.body =~ /#{config[:pattern]}/
+          critical "#{res.code}, found /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
+        else
+          ok "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes" + body
         end
       else
         ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
