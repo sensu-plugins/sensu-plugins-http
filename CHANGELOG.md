@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Fixed
 - Don't send basic auth when no password is supplied
+- Add default thresholds to check-https-cert.rb
 
 ## [0.4.0] - 2016-04-26
 ### Changed
