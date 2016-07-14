@@ -44,12 +44,14 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
          short: '-w',
          long: '--warning DAYS',
          proc: proc(&:to_i),
+         default: 50,
          description: 'Warn EXPIRE days before cert expires'
 
   option :critical,
          short: '-c',
          long: '--critical DAYS',
          proc: proc(&:to_i),
+         default: 25,
          description: 'Critical EXPIRE days before cert expires'
 
   option :insecure,
