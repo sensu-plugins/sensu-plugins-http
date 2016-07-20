@@ -11,9 +11,15 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Add `rest-client` dependency for `metrics-http-json`
 
+### Removed
+- Support for Ruby 1.9.3
+
+### Changed
+- Upgrade to Rubocop 0.40 and cleanup
+
 ## [0.4.0] - 2016-04-26
 ### Changed
-- Rename http-json-graphite -> metrics-json-graphite 
+- Rename http-json-graphite -> metrics-json-graphite
 
 ## [0.3.0] - 2016-04-08
 ### Added
