@@ -14,6 +14,7 @@
  * bin/check-https-cert.rb
  * bin/check-last-modified.rb
  * bin/metrics-curl.rb
+ * bin/metrics-http-json.rb
  * bin/metrics-http-json-deep.rb
  * bin/check-head-redirect.rb
  * bin/check-http-cors.rb
