@@ -7,9 +7,12 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - Don't send basic auth when no password is supplied
 - Add default thresholds to check-https-cert.rb
+- check-http: fix default port selection for https
 
 ### Added
 - Add `rest-client` dependency for `metrics-http-json`
+- Add `check-head-redirect` that checks that redirection links can be followed in a set number of requests
+- Add `check-http-cors` that checks CORS headers
 
 ### Removed
 - Support for Ruby 1.9.3
