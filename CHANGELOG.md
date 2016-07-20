@@ -8,6 +8,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - Don't send basic auth when no password is supplied
 - Add default thresholds to check-https-cert.rb
 
+### Added
+- Add `rest-client` dependency for `metrics-http-json`
+
 ## [0.4.0] - 2016-04-26
 ### Changed
 - Rename http-json-graphite -> metrics-json-graphite 
