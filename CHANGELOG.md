@@ -20,6 +20,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ### Changed
 - Upgrade to Rubocop 0.40 and cleanup
+- Pin to `json < 2.0.0` to workaround test failures on Ruby 2.3.0
 
 ## [0.4.0] - 2016-04-26
 ### Changed

@@ -47,4 +47,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'kitchen-vagrant',           '~> 0.19'
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
   s.add_development_dependency 'net-ssh',                   '~> 2.9'
+  s.add_development_dependency 'json',                      '< 2.0.0'
 end
