@@ -13,6 +13,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - Add `rest-client` dependency for `metrics-http-json`
 - Add `check-head-redirect` that checks that redirection links can be followed in a set number of requests
 - Add `check-http-cors` that checks CORS headers
+- check-http-json: add `cert-key` parameter to allow specifying a separate cert file
 
 ### Removed
 - Support for Ruby 1.9.3
