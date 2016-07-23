@@ -50,8 +50,9 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :insecure, short: '-k', boolean: true, default: false
   option :user, short: '-U', long: '--username USER'
   option :password, short: '-a', long: '--password PASS'
-  option :cert, short: '-c FILE'
-  option :cacert, short: '-C FILE'
+  option :cert, short: '-c FILE', long: '--cert FILE'
+  option :certkey, long: '--cert-key FILE'
+  option :cacert, short: '-C FILE', long: '--cacert FILE'
   option :timeout, short: '-t SECS', proc: proc(&:to_i), default: 15
   option :key, short: '-K KEY', long: '--key KEY'
   option :value, short: '-v VALUE', long: '--value VALUE'
@@ -98,6 +99,9 @@ class CheckJson < Sensu::Plugin::Check::CLI
       if config[:cert]
         cert_data = File.read(config[:cert])
         http.cert = OpenSSL::X509::Certificate.new(cert_data)
+        if config[:certkey]
+          cert_data = File.read(config[:certkey])
+        end
         http.key = OpenSSL::PKey::RSA.new(cert_data, nil)
       end
       http.ca_file = config[:cacert] if config[:cacert]
