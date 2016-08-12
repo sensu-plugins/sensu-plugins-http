@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Changed
+- Reverting rest-client to 1.8 as 2.0 requires ruby >= 2.0
 
 ## [1.0.0] - 2016-07-27
 ### Fixed
