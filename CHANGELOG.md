@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Changed
 - Reverting rest-client to 1.8 as 2.0 requires ruby >= 2.0
+- metrics-http-json: fix behavior when a root object key is not specified
 
 ## [1.0.0] - 2016-07-27
 ### Fixed
