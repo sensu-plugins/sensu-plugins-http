@@ -88,35 +88,30 @@ class CheckJson < Sensu::Plugin::Check::CLI
     case data
     when Array
       data.each_with_index do |value, index|
-        arrKey = parent + '[' + index.to_s + ']'
+        arr_key = parent + '[' + index.to_s + ']'
 
-        if arrKey == desired_key
-          return value
-        end
+        return value if arr_key == desired_key
 
-        if desired_key.include? arrKey
-          search = deep_value(value, desired_key, arrKey)
+        if desired_key.include? arr_key
+          search = deep_value(value, desired_key, arr_key)
 
           return search unless search.nil?
         end
       end
     when Hash
       data.each do |key, value|
-        hashKey = parent + (parent.empty? ? '' : '.') + key
+        key_prefix = parent.empty? ? '' : '.'
+        hash_key = parent + key_prefix + key
 
-        if hashKey == desired_key
-          return value
-        end
+        return value if hash_key == desired_key
 
-        if desired_key.include? (hashKey + ".") or desired_key.include? (hashKey + "[")
-          search = deep_value(value, desired_key, hashKey)
+        if desired_key.include? hash_key + '.' || desired_key.include? hash_key + '['
+          search = deep_value(value, desired_key, hash_key)
 
           return search unless search.nil?
         end
       end
     end
-
-    return nil
   end
 
   def json_valid?(str)
@@ -171,8 +166,8 @@ class CheckJson < Sensu::Plugin::Check::CLI
 
     begin
       leaf = deep_value(json, config[:key])
- 
-      raise "could not find key: #{config[:key]}" unless !leaf.nil?
+
+      raise "could not find key: #{config[:key]}" if leaf.nil?
       raise "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
 
       ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
