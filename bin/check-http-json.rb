@@ -93,7 +93,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
         if arr_key == desired_key
           return value
         end
-        
+
         if desired_key.include? arr_key
           search = deep_value(value, desired_key, arr_key)
 
@@ -106,7 +106,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
         hash_key = parent + key_prefix + key
 
         if hash_key == desired_key
-          return value 
+          return value
         end
 
         if desired_key.include?(hash_key + '.') || desired_key.include?(hash_key + '[')
