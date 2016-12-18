@@ -90,8 +90,10 @@ class CheckJson < Sensu::Plugin::Check::CLI
       data.each_with_index do |value, index|
         arr_key = parent + '[' + index.to_s + ']'
 
-        return value if arr_key == desired_key
-
+        if arr_key == desired_key
+          return value
+        end
+        
         if desired_key.include? arr_key
           search = deep_value(value, desired_key, arr_key)
 
@@ -103,9 +105,11 @@ class CheckJson < Sensu::Plugin::Check::CLI
         key_prefix = parent.empty? ? '' : '.'
         hash_key = parent + key_prefix + key
 
-        return value if hash_key == desired_key
+        if hash_key == desired_key
+          return value 
+        end
 
-        if desired_key.include? hash_key + '.' || desired_key.include? hash_key + '['
+        if desired_key.include?(hash_key + '.') || desired_key.include?(hash_key + '[')
           search = deep_value(value, desired_key, hash_key)
 
           return search unless search.nil?
