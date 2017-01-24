@@ -8,7 +8,7 @@ provisioner:
   script: test/fixtures/bootstrap.sh
 
 verifier:
-  ruby_bindir: /opt/sensu/embedded/bin
+  ruby_bindir: <%= ENV['MY_RUBY_HOME'] || '/opt/sensu/embedded' %>/bin
 
 platforms:
   - name: ubuntu-14.04
