@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+### Changed
+- check-http-json: fix incorrect "key not found" error when key value is null
+
 ## [2.0.0] - 2017-02-20
 ### Breaking Changes
 - Support for Ruby < 2.1 removed. Ruby 2.0 and older are EOL.

@@ -13,6 +13,7 @@ setup() {
   INNER_GEM_HOME=$($RUBY_HOME/bin/ruby -e 'print ENV["GEM_HOME"]')
   [ -n "$INNER_GEM_HOME" ] && GEM_BIN=$INNER_GEM_HOME/bin || GEM_BIN=$RUBY_HOME/bin
   export CHECK="$RUBY_HOME/bin/ruby $GEM_BIN/check-http.rb"
+  export CHECK_JSON="$RUBY_HOME/bin/ruby $GEM_BIN/check-http-json.rb"
 }
 
 teardown() {
@@ -60,4 +61,9 @@ teardown() {
 @test "Check a site with a POST request, critical" {
   run $CHECK -h localhost -p /okay -m POST -d somejunk
   [ $status = 2 ]
+}
+
+@test "Check a site returns JSON with an 'errors' key containing null" {
+  run $CHECK_JSON -h localhost -p /json/okay -K errors -v null
+  [ $status = 0 ]
 }

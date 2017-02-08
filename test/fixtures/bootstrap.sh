@@ -57,6 +57,13 @@ echo "
     location /postthingshere {
       return 200;
     }
+
+    location /json/okay {
+      limit_except GET {
+        deny all;
+      }
+      return 200 '{\"errors\":null}';
+    }
   }
 " > /etc/nginx/sites-enabled/sensu-plugins-http.conf
 service nginx restart
