@@ -56,6 +56,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :timeout, short: '-t SECS', proc: proc(&:to_i), default: 15
   option :key, short: '-K KEY', long: '--key KEY'
   option :value, short: '-v VALUE', long: '--value VALUE'
+  option :whole_response, short: '-w', long: '--whole-response', boolean: true, default: false
 
   def run
     if config[:url]
@@ -162,7 +163,10 @@ class CheckJson < Sensu::Plugin::Check::CLI
     end
     res = http.request(req)
 
-    critical res.code unless res.code =~ /^2/
+    unless res.code =~ /^2/
+      critacal "http code: #{res.code}: body: #{res.body}" if config[:whole_response]
+      critical res.code
+    end
     critical 'invalid JSON from request' unless json_valid?(res.body)
     ok 'valid JSON returned' if config[:key].nil? && config[:value].nil?
 
