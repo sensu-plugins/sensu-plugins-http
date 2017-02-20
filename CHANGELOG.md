@@ -4,10 +4,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Breaking Changes
+- Support for Ruby < 2.1 removed. Ruby 2.0 and older are EOL.
+- The `-b` option in `check-http` to send a data body with the request has been changed to `-d` to
+  avoid conflicting with the `-b` option to print the bytes of the response.
+
 ### Changed
-- Reverting rest-client to 1.8 as 2.0 requires ruby >= 2.0
-- metrics-http-json: fix behavior when a root object key is not specified
-- check-http-json: add an option to return response body
+- Revert rest-client to 1.8 as 2.0 requires ruby >= 2.0 (@sstarcher)
+- `check-http`: change conflicting body short argument letter to `-d` for data (@rmkbow)
+
+### Fixed
+- `metrics-http-json`: fix behavior when a root object key is not specified (@mrooney)
+- Fix CI tests (@RoboticCheese)
+
+### Added
+- `check-http-json`: add an option to return response body (@obazoud)
+- `check-http-json`: support nested hash/array paths in key (@parisholley)
 
 ## [1.0.0] - 2016-07-27
 ### Fixed
