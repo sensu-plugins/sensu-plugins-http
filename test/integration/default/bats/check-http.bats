@@ -52,12 +52,12 @@ teardown() {
 }
 
 @test "Check a site with a POST request, ok" {
-  run $CHECK -h localhost -p /postthingshere -m POST -b somejunk
+  run $CHECK -h localhost -p /postthingshere -m POST -d somejunk
   [ $status = 0 ]
   [ "$output" = "CheckHttp OK: 200, 0 bytes" ]
 }
 
 @test "Check a site with a POST request, critical" {
-  run $CHECK -h localhost -p /okay -m POST -b somejunk
+  run $CHECK -h localhost -p /okay -m POST -d somejunk
   [ $status = 2 ]
 }

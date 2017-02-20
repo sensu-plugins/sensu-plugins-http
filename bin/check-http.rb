@@ -87,9 +87,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Send one or more comma-separated headers with the request'
 
   option :body,
-         short: '-b BODY',
+         short: '-d BODY',
          long: '--body BODY',
-         description: 'Send a body string with the request'
+         description: 'Send a data body string with the request'
 
   option :ssl,
          short: '-s',
