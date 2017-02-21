@@ -92,7 +92,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
         arr_key = parent + '[' + index.to_s + ']'
 
         if arr_key == desired_key
-          return value
+          return value.nil? ? 'null' : value
         end
 
         if desired_key.include? arr_key
@@ -107,7 +107,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
         hash_key = parent + key_prefix + key
 
         if hash_key == desired_key
-          return value
+          return value.nil? ? 'null' : value
         end
 
         if desired_key.include?(hash_key + '.') || desired_key.include?(hash_key + '[')
