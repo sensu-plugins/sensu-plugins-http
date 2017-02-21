@@ -5,8 +5,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
-### Changed
-- check-http-json: fix incorrect "key not found" error when key value is null
+## [2.0.1] - 2017-02-21
+### Fixed
+- `check-http-json`: fix incorrect "key not found" error when key value is null (@marktheunissen)
 
 ## [2.0.0] - 2017-02-20
 ### Breaking Changes
@@ -112,7 +113,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.4.0...1.0.0
 [0.4.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/0.3.0...0.4.0
