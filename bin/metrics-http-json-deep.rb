@@ -79,7 +79,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
   def deep_value(hash, scheme = '')
     hash.each do |key, value|
-      ekey = key.tr(/ /, '_')
+      ekey = key.tr(' ', '_')
       if value.is_a?(Hash)
         deep_value(value, "#{scheme}.#{ekey}")
       else

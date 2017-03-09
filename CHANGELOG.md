@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- `metrics-http-json-deep`: fix key normalization (@ushi-as)
 
 ## [2.0.1] - 2017-02-21
 ### Fixed
