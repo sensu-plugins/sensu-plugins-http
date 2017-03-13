@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [2.0.2] - 2017-03-3
+### Fixed
+- `metrics-http-json-deep`: fix Regexp error (@nevins-b)
+
 ## [2.0.1] - 2017-02-21
 ### Fixed
 - `check-http-json`: fix incorrect "key not found" error when key value is null (@marktheunissen)
