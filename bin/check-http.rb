@@ -42,6 +42,7 @@
 require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
+require 'digest'
 
 #
 # Check HTTP
@@ -138,6 +139,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          short: '-n PAT',
          long: '--negquery PAT',
          description: 'Query for a specific pattern that must be absent'
+
+  option :sha256checksum,
+         short: '-S CHECKSUM',
+         long: '--checksum CHECKSUM',
+         description: 'SHA-256 checksum'
 
   option :timeout,
          short: '-t SECS',
@@ -319,6 +325,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
           critical "#{res.code}, found /#{config[:negpattern]}/ in #{size} bytes: #{res.body[0...200]}..."
         else
           ok "#{res.code}, did not find /#{config[:negpattern]}/ in #{size} bytes" + body
+        end
+      elsif config[:sha256checksum]
+        if Digest::SHA256.hexdigest(res.body).eql? config[:sha256checksum]
+          ok "#{res.code}, checksum match #{config[:sha256checksum]} in #{size} bytes" + body
+        else
+          critical "#{res.code}, checksum did not match #{config[:sha256checksum]} in #{size} bytes: #{res.body[0...200]}..."
         end
       else
         ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
