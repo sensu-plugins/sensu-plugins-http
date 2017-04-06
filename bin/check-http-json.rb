@@ -164,7 +164,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     res = http.request(req)
 
     unless res.code =~ /^2/
-      critacal "http code: #{res.code}: body: #{res.body}" if config[:whole_response]
+      critical "http code: #{res.code}: body: #{res.body}" if config[:whole_response]
       critical res.code
     end
     critical 'invalid JSON from request' unless json_valid?(res.body)
