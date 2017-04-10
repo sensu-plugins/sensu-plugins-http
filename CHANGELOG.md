@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- `check-http-json`: fix error when check fails and --whole-response is enabled (@ushis)
 
 ## [2.0.2] - 2017-03-13
 ### Fixed
