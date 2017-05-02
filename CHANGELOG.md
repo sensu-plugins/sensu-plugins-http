@@ -7,6 +7,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - `check-http-json`: fix error when check fails and --whole-response is enabled (@ushis)
 
+### Added
+- `check-http`: add checksum check
+
 ## [2.0.2] - 2017-03-13
 ### Fixed
 - `metrics-http-json-deep`: fix Regexp error (@nevins-b)
