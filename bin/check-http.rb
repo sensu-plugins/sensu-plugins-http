@@ -254,13 +254,20 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if config[:insecure]
 
       unless config[:expiry].nil?
-        expire_warn_date = Time.now + (config[:expiry] * 60 * 60 * 24)
+        expire_warn_date = Time.now.utc + (config[:expiry] * 60 * 60 * 24)
         # We can't raise inside the callback, have to check when we finish.
         http.verify_callback = proc do |preverify_ok, ssl_context|
+          p '#################'
+          p "preverify_ok:     #{preverify_ok}"
+          p "expire_warn_date: #{expire_warn_date}"
+          p "ssl_context:      #{ssl_context.current_cert.issuer}"
+          p "expires:          #{ssl_context.current_cert.not_after}"
           if ssl_context.current_cert.not_after <= expire_warn_date
+            p "#{ssl_context.current_cert.not_after} is less than #{expire_warn_date}"
             warn_cert_expire = ssl_context.current_cert.not_after
+          else
+            p "#{ssl_context.current_cert.not_after} is greater than #{expire_warn_date}"
           end
-
           preverify_ok
         end
       end
@@ -300,6 +307,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       critical "Response was #{res.body.length} bytes instead of #{config[:require_bytes]}" + body
     end
 
+    p warn_cert_expire
     unless warn_cert_expire.nil?
       warning "Certificate will expire #{warn_cert_expire}"
     end
@@ -359,6 +367,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     if config[:response_code]
       if config[:response_code] == res.code
+
         ok "#{res.code}, #{size} bytes" + body
       else
         critical res.code + body
