@@ -90,7 +90,6 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
     else
       ok "TLS/SSL certificate expires on #{@cert.not_after} - #{days_until} days left."
     end
-
   rescue
     critical "Could not connect to #{config[:url]}"
   end
