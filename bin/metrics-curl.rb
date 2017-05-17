@@ -57,18 +57,18 @@ class CurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
   def run
     cmd = "curl --silent --output /dev/null #{config[:curl_args]} "
-    cmd += '-w "%{time_total},%{time_namelookup},%{time_connect},%{time_pretransfer},%{time_redirect},%{time_starttransfer},%{http_code}" '
+    cmd += '-w "%{time_total}|%{time_namelookup}|%{time_connect}|%{time_pretransfer}|%{time_redirect}|%{time_starttransfer}|%{http_code}" '
     cmd += config[:url]
 
     output = `#{cmd}`
 
-    (time_total, time_namelookup, time_connect, time_pretransfer, time_redirect, time_starttransfer, http_code) = output.split(',')
-    output "#{config[:scheme]}.time_total", time_total
-    output "#{config[:scheme]}.time_namelookup", time_namelookup
-    output "#{config[:scheme]}.time_connect", time_connect
-    output "#{config[:scheme]}.time_pretransfer", time_pretransfer
-    output "#{config[:scheme]}.time_redirect", time_redirect
-    output "#{config[:scheme]}.time_starttransfer", time_starttransfer
+    (time_total, time_namelookup, time_connect, time_pretransfer, time_redirect, time_starttransfer, http_code) = output.split('|')
+    output "#{config[:scheme]}.time_total", time_total.tr(',', '')
+    output "#{config[:scheme]}.time_namelookup", time_namelookup.tr(',', '')
+    output "#{config[:scheme]}.time_connect", time_connect.tr(',','')
+    output "#{config[:scheme]}.time_pretransfer", time_pretransfer.tr(',', '')
+    output "#{config[:scheme]}.time_redirect", time_redirect.tr(',', '')
+    output "#{config[:scheme]}.time_starttransfer", time_starttransfer.tr(',', '')
     output "#{config[:scheme]}.http_code", http_code
 
     if $CHILD_STATUS.to_i == 0
