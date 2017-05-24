@@ -3,8 +3,9 @@
 #   check-https-cert
 #
 # DESCRIPTION:
-#    Checks the expiration date of a URL SSL Certificate
-#    and notifies if it is before the expiry parameter.
+#    Checks the expiration date of a URL's TLS/SSL Certificate
+#    and notifies if it is before the expiry parameter. Throws
+#    a critical if the date is at or past the expiry date.
 #
 # OUTPUT:
 #   plain text
@@ -17,12 +18,17 @@
 #   gem: net-https
 #
 # USAGE:
-#   #YELLOW
+#   Check that will warn 1 week prior and critical 3 days prior
+#      ./check-https-cert.rb -u https://my.site.com -w 7 -c 3
+#
+#   Check an insecure certificate that will warn 1 week prior and critical 3 days prior
+#      ./check-https-cert.rb -u https://my.site.com -k -w 7 -c 3
 #
 # NOTES:
 #
 # LICENSE:
 #   Copyright 2014 Rhommel Lamas <roml@rhommell.com>
+#   Updated by Phil Porada 2017 to provide more clear documentation and messages
 #   Released under the same terms as Sensu (the MIT license); see LICENSE
 #   for details.
 #
@@ -38,7 +44,7 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
          short: '-u URL',
          long: '--url URL',
          proc: proc(&:to_s),
-         description: 'A URL to connect to'
+         description: 'The URL to connect to'
 
   option :warning,
          short: '-w',
@@ -76,15 +82,14 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
     days_until = ((@cert.not_after - Time.now) / (60 * 60 * 24)).to_i
 
     if days_until <= 0
-      critical "Expired #{days_until.abs} days ago."
+      critical "TLS/SSL certificate expired #{days_until.abs} days ago."
     elsif days_until < config[:critical].to_i
-      critical "SSL expires on #{@cert.not_after} - #{days_until} days left."
+      critical "TLS/SSL certificate expires on #{@cert.not_after} - #{days_until} days left."
     elsif days_until < config[:warning].to_i
-      warning "SSL expires on #{@cert.not_after} - #{days_until} days left."
+      warning "TLS/SSL certificate expires on #{@cert.not_after} - #{days_until} days left."
     else
-      ok "SSL expires on #{@cert.not_after} - #{days_until} days left."
+      ok "TLS/SSL certificate expires on #{@cert.not_after} - #{days_until} days left."
     end
-
   rescue
     critical "Could not connect to #{config[:url]}"
   end
