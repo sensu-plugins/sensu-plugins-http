@@ -5,7 +5,7 @@
 # DESCRIPTION:
 #   Takes either a URL or a combination of host/path/query/port/ssl, and checks
 #   for valid JSON output in the response. Can also optionally validate simple
-#   string key/value pairs.
+#   string key/value pairs, and check if a specified value is within bounds.
 #
 # OUTPUT:
 #   plain text
@@ -56,6 +56,8 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :timeout, short: '-t SECS', proc: proc(&:to_i), default: 15
   option :key, short: '-K KEY', long: '--key KEY'
   option :value, short: '-v VALUE', long: '--value VALUE'
+  option :valueGt, long: '--value-greater-than VALUE'
+  option :valueLt, long: '--value-less-than VALUE'
   option :whole_response, short: '-w', long: '--whole-response', boolean: true, default: false
 
   def run
@@ -176,9 +178,22 @@ class CheckJson < Sensu::Plugin::Check::CLI
       leaf = deep_value(json, config[:key])
 
       raise "could not find key: #{config[:key]}" if leaf.nil?
-      raise "unexpected value for key: '#{config[:value]}' != '#{leaf}'" unless leaf.to_s == config[:value].to_s
 
-      ok "key has expected value: '#{config[:key]}' = '#{config[:value]}'"
+      message = "key has expected value: '#{config[:key]}' "
+      if config[:value]
+        raise "unexpected value for key: '#{leaf}' != '#{config[:value]}'" unless leaf.to_s == config[:value].to_s
+        message += " equals '#{config[:value]}'"
+      end
+      if config[:valueGt]
+        raise "unexpected value for key: '#{leaf}' not > '#{config[:valueGt]}'" unless leaf.to_f > config[:valueGt].to_f
+        message += " greater than '#{config[:valueGt]}'"
+      end
+      if config[:valueLt]
+        raise "unexpected value for key: '#{leaf}' not < '#{config[:valueLt]}'" unless leaf.to_f < config[:valueLt].to_f
+        message += " less than '#{config[:valueLt]}'"
+      end
+
+      ok message
     rescue => e
       critical "key check failed: #{e}"
     end
