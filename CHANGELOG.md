@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- `check-http-json`: add --value-greater-than and --value-less-than options (@dave-handy)
+
 ## [2.1.0]
 ### Fixed
 - `check-http-json`: fix error when check fails and --whole-response is enabled (@ushis)
