@@ -67,3 +67,8 @@ teardown() {
   run $CHECK_JSON -h localhost -p /json/okay -K errors -v null
   [ $status = 0 ]
 }
+
+@test "Check a site returns JSON with an 'failures' key between 4 and 6" {
+  run $CHECK_JSON -h localhost -p /json/metric -K count --value-greater-than 4 --value-less-than 6
+  [ $status = 0 ]
+}
