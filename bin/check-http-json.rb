@@ -5,7 +5,8 @@
 # DESCRIPTION:
 #   Takes either a URL or a combination of host/path/query/port/ssl, and checks
 #   for valid JSON output in the response. Can also optionally validate simple
-#   string key/value pairs, and check if a specified value is within bounds.
+#   string key/value pairs, and optionally check if a specified value is within
+#   bounds.
 #
 # OUTPUT:
 #   plain text
@@ -18,7 +19,12 @@
 #   gem: json
 #
 # USAGE:
-#   #YELLOW
+#   Check that will verify http status and JSON validity
+#      ./check-http-json.rb -u http://my.site.com/health.json
+#
+#   Check that will verify http status, JSON validity, and that page.totalElements value is
+#   greater than 10
+#      ./check-http-json.rb -u http://my.site.com/metric.json --key page.totalElements --value-greater-than 10
 #
 # NOTES:
 #   Based on Check HTTP by Sonian Inc.
