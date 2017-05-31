@@ -1,9 +1,12 @@
-#Change Log
+# Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+## Added
+- check-http.rb: supports PUT requests (@majormoses)
+- check-http.rb: added examples per GH issues (@majormoses)
 ## [2.2.0] - 2017-05-31
 ### Added
 - `check-http-json`: add --value-greater-than and --value-less-than options (@dave-handy)
