@@ -8,6 +8,42 @@
 
 ## Functionality
 
+`sensu-plugins-http` allows you to check for HTTP codes, redirects, last modified times, JSON content. Furthermore you can collect metrics about JSON responses and details about the transfer (via `curl`).
+
+### check-http-json.rb
+
+Takes either a URL or a combination of host/path/query/port/ssl, and checks for valid JSON output in the response. This check will always check for HTTP status and JSON validity in addition to options you specify.
+
+**parameters:**
+
+- `-a PASSWORD, --password PASSWORD`: The password to use for authentication (default: None)
+- `-b BODY`: The body sent with the request (default: None)
+- `-C FILE, --cacert FILE`: The certificate authority (CA) certificate file your certificate is signed with - in case it is not in the default certificate store (default: None)
+- `-c FILE, --cert FILE`: The TLS client-side certificate to be used in combination with your certificate key (default: None)
+- `-h HEADER, --header HEADER`: One or more headers sent with the request (default: None)
+- `-h HOST`: The host to connect to (default: None)
+- `-K KEY, --key KEY`: The key to be used for a key-value lookup in the received JSON (default: None)
+- `-k true|false`: Disable TLS certificate chain verification (default: `false`)
+- `-m METHOD`: The method to use for the request, e.g. `GET`, `POST` (default: TODO)
+- `-p PATH`: The path on the host to access (default: None)
+- `-P PORT`: The port to connect to (default: None)
+- `-q QUERY`: The query to run (default: None)
+- `-s true|false`: Use an encrypted connection (default: `false`)
+- `-t SECONDS`: The timeout used for the connection, in seconds (default: `15`)
+- `-u URL`: The URL to connect to (default: None)
+- `-U USERNAME, --username USERNAME`: The username to use for authentication (default: None)
+- `-v VALUE, --value VALUE`: Check whether the value retrieved via -K is matches this value (default: None)
+- `-w true|false, --whole-response true|false` (default: `false`)
+- `--cert-key FILE`: The TLS certificate key to be used in combination with your client-side certificate (default: None)
+- `--value-greater-than VALUE`: Check whether the value retrieved via -K is larger than this value (default: None)
+- `--value-less-than VALUE`: Check whether the value retrieved via -K is smaller than this value (default: None)
+
+---
+
+Items below this separator subject to rework (branch will be rebased before merging)
+
+---
+
 ## Files
  * bin/check-http-json.rb
  * bin/check-http.rb
