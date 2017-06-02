@@ -4,9 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [2.3.0] - 2017-06-01
 ### Added
 - check-http.rb: support PUT requests (@majormoses)
 - check-http.rb: added examples per GH issues (@majormoses)
+
 ## [2.2.0] - 2017-05-31
 ### Added
 - `check-http-json`: add --value-greater-than and --value-less-than options (@dave-handy)
@@ -131,7 +134,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.2.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.3.0...HEAD
+[2.3.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.2...2.1.0
 [2.0.2]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.1...2.0.2
