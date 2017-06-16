@@ -64,6 +64,13 @@ echo "
       }
       return 200 '{\"errors\":null}';
     }
+
+    location /json/metric {
+      limit_except GET {
+        deny all;
+      }
+      return 200 '{\"count\":5}';
+    }
   }
 " > /etc/nginx/sites-enabled/sensu-plugins-http.conf
 service nginx restart

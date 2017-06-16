@@ -28,6 +28,11 @@
 #   Use a proxy to check a URL
 #   check-http.rb -u https://www.google.com --proxy-url http://my.proxy.com:3128
 #
+#   Check something with needing to set multiple headers
+#   check-http.rb -u https://www.google.com --header 'Origin: ma.local.box, SomeRandomHeader: foo'
+#
+#   Check something that requires a POST with json data
+#   check-http.rb -u https://httpbin.org/post --method POST --header 'Content-type: application/json' --body '{"foo": "bar"}'
 # NOTES:
 #
 # LICENSE:
@@ -77,9 +82,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
   option :method,
          short: '-m GET|POST',
-         long: '--method GET|POST',
-         description: 'Specify a GET or POST operation; defaults to GET',
-         in: %w(GET POST),
+         long: '--method GET|POST|PUT',
+         description: 'Specify a GET, POST, or PUT operation; defaults to GET',
+         in: %w(GET POST PUT),
          default: 'GET'
 
   option :header,
@@ -271,6 +276,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
             Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
           when 'POST'
             Net::HTTP::Post.new(config[:request_uri], 'User-Agent' => config[:ua])
+          when 'PUT'
+            Net::HTTP::Put.new(config[:request_uri], 'User-Agent' => config[:ua])
           end
 
     unless config[:user].nil? && config[:password].nil?
