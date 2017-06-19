@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- Initial set of tests for `check-https-cert.rb` (@pgporada)
+
+### Changed
+- `check-https-cert.rb`: Allow checking for a successfully expired certificate (@pgporada)
 
 ## [2.3.0] - 2017-06-01
 ### Added
