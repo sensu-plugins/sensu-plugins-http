@@ -4,10 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [2.4.0] - 2017-06-19
 ### Added
 - Initial set of tests for `check-https-cert.rb` (@pgporada)
-
-### Changed
 - `check-https-cert.rb`: Allow checking for a successfully expired certificate (@pgporada)
 
 ## [2.3.0] - 2017-06-01
@@ -139,7 +139,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.3.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.4.0...HEAD
+[2.4.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.0.2...2.1.0
