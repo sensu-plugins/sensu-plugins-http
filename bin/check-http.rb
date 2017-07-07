@@ -44,6 +44,7 @@
 #   for details.
 #
 
+require 'sensu-plugins-http'
 require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
@@ -201,6 +202,23 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Do not use proxy server even from environment http_proxy setting',
          default: false
 
+  option :aws_v4,
+         long: '--aws-v4',
+         boolean: true,
+         description: 'Sign http request with AWS v4 signature',
+         default: false
+
+  option :aws_v4_region,
+         long: '--aws-v4-region REGION',
+         description: 'Region to use for AWS v4 signing.  Defaults to AWS_REGION or AWS_DEFAULT_REGION'
+
+  option :aws_v4_service,
+         long: '--aws-v4-service SERVICE',
+         description: 'Service name to use when building the v4 signature',
+         default: 'execute-api'
+
+  include SensuPluginsHttp::AwsV4
+
   def run
     if config[:url]
       uri = URI.parse(config[:url])
@@ -290,6 +308,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       end
     end
     req.body = config[:body] if config[:body]
+
+    req = apply_v4_signature(http, req, config) if config[:aws_v4]
 
     res = http.request(req)
 
