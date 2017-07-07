@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- `check-http`: Added ability to sign requests with AWS V4 authentication
 
 ## [2.4.0] - 2017-06-19
 ### Added
