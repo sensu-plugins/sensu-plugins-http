@@ -9,6 +9,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ### Fixed
 - spelling in PR template (@majormoses)
+- use rest-client 2.0 to fix issue with OpenSSL 1.1.0 (@ushis)
 
 ## [2.5.0] - 2017-07-06
 ### Added
