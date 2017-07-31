@@ -46,5 +46,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-kitchen',              '~> 1.6'
   s.add_development_dependency 'kitchen-vagrant',           '~> 0.19'
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
+  s.add_development_dependency 'mixlib-shellout',           '~> 2.2.7'
   s.add_development_dependency 'json',                      '< 2.0.0'
 end
