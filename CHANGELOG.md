@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Added - 2018-02-08
+- Add new options `--dump-json` to dump json response on failure when enable. default: false (@jplindquist)
+- Add new `--pretty` option for pretty format json response when `--dump-json` is enabled. default: false (@jplindquist)
 
 ## [2.7.0] - 2018-02-15
 ### Added
