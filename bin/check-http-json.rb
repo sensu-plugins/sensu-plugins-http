@@ -65,6 +65,8 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :valueGt, long: '--value-greater-than VALUE'
   option :valueLt, long: '--value-less-than VALUE'
   option :whole_response, short: '-w', long: '--whole-response', boolean: true, default: false
+  option :dump_json, short: '-d', long: '--dump-json', boolean: true, default: false
+  option :pretty, long: '--pretty', boolean: true, default: false
 
   def run
     if config[:url]
@@ -188,20 +190,26 @@ class CheckJson < Sensu::Plugin::Check::CLI
       message = "key has expected value: '#{config[:key]}' "
       if config[:value]
         raise "unexpected value for key: '#{leaf}' != '#{config[:value]}'" unless leaf.to_s == config[:value].to_s
-        message += " equals '#{config[:value]}'"
+        message += "equals '#{config[:value]}'"
       end
       if config[:valueGt]
         raise "unexpected value for key: '#{leaf}' not > '#{config[:valueGt]}'" unless leaf.to_f > config[:valueGt].to_f
-        message += " greater than '#{config[:valueGt]}'"
+        message += "greater than '#{config[:valueGt]}'"
       end
       if config[:valueLt]
         raise "unexpected value for key: '#{leaf}' not < '#{config[:valueLt]}'" unless leaf.to_f < config[:valueLt].to_f
-        message += " less than '#{config[:valueLt]}'"
+        message += "less than '#{config[:valueLt]}'"
       end
 
       ok message
     rescue => e
-      critical "key check failed: #{e}"
+      if config[:dump_json]
+        json_response = config[:pretty] ? JSON.pretty_generate(json) : json
+        message = "key check failed: #{e}. Response: #{json_response}"
+      else
+        message = "key check failed: #{e}"
+      end
+      critical message
     end
   end
 end

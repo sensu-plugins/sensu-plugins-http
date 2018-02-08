@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added - 2018-02-08
+- Add new options `--dump-json` to dump json response on failure when enable. default: false (@jplindquist)
+- Add new `--pretty` option for pretty format json response when `--dump-json` is enabled. default: false (@jplindquist)
 
 ## [2.6.0] - 2017-07-31
 ### Added
