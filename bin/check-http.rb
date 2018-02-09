@@ -28,6 +28,10 @@
 #   Use a proxy to check a URL
 #   check-http.rb -u https://www.google.com --proxy-url http://my.proxy.com:3128
 #
+#   Use a proxy with username and password to check a URL
+#   NOTE: Use 'check token substition' to avoid credentials leakage!
+#   check-http.rb -u https://www.google.com --proxy-url http://a_user:a_pass@my.proxy.com:3128
+#
 #   Check something with needing to set multiple headers
 #   check-http.rb -u https://www.google.com --header 'Origin: ma.local.box, SomeRandomHeader: foo'
 #
@@ -40,6 +44,7 @@
 #   Updated by Lewis Preson 2012 to accept basic auth credentials
 #   Updated by SweetSpot 2012 to require specified redirect
 #   Updated by Chris Armstrong 2013 to accept multiple headers
+#   Updated by Mark Clarkson 2018 to accept proxy auth credentials
 #   Released under the same terms as Sensu (the MIT license); see LICENSE
 #   for details.
 #
@@ -255,7 +260,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       if proxy_uri.host.nil?
         unknown 'Invalid proxy url specified'
       end
-      http = Net::HTTP.new(config[:host], config[:port], proxy_uri.host, proxy_uri.port)
+      http = if proxy_uri.user && proxy_uri.password
+               Net::HTTP.new(config[:host], config[:port], proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
+             else
+               Net::HTTP.new(config[:host], config[:port], proxy_uri.host, proxy_uri.port)
+             end
     else
       http = Net::HTTP.new(config[:host], config[:port])
     end
