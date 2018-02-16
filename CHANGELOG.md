@@ -1,12 +1,16 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
+This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
 
+## [2.7.0] - 2018-02-15
 ### Added
 - `check-http`: Added ability to use username and password in proxy url (@mclarkson)
+
+### Changed
+- updated changelog location guidelines (@majormoses)
 
 ## [2.6.0] - 2017-07-31
 ### Added
@@ -154,7 +158,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.6.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.7.0...HEAD
+[2.7.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.6.0...2.7.0
 [2.6.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.5.0...2.6.0
 [2.5.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.3.0...2.4.0
