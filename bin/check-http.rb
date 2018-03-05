@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-http
 #
@@ -90,7 +92,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          short: '-m GET|POST',
          long: '--method GET|POST|PUT',
          description: 'Specify a GET, POST, or PUT operation; defaults to GET',
-         in: %w(GET POST PUT),
+         in: %w[GET POST PUT],
          default: 'GET'
 
   option :header,
@@ -245,7 +247,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       end
     rescue Timeout::Error
       critical 'Request timed out'
-    rescue => e
+    rescue StandardError => e
       critical "Request error: #{e.message}"
     end
   end
@@ -393,12 +395,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       warning(res.code + body) unless config[:response_code]
     end
 
-    if config[:response_code]
-      if config[:response_code] == res.code
-        ok "#{res.code}, #{size} bytes" + body
-      else
-        critical res.code + body
-      end
+    if config[:response_code] && config[:response_code] == res.code
+      ok "#{res.code}, #{size} bytes" + body
+
+    else
+      critical res.code + body
     end
   end
 end

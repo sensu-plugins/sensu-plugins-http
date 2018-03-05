@@ -5,6 +5,12 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Security
+- updated rubocop dependency to `~> 0.51.0` per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8418. (@majormoses)
+
+### Changed
+- appeased the cops, updated cop config, and created TODOs for refactoring (@majormoses)
+
 ## [2.8.0] 2018-02-17
 ### Added
 - Add new options `--dump-json` to dump json response on failure when enable. default: false (@jplindquist)

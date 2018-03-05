@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'aws-sdk'
 require_relative '../../spec_helper.rb'
 require_relative '../../../lib/sensu-plugins-http/aws-v4'
@@ -16,7 +18,7 @@ describe 'AwsV4' do
     @aws_v4 = Object.new
     @aws_v4.extend(SensuPluginsHttp::AwsV4)
 
-    @time_now = Time.utc(2015, 07, 06, 16, 48, 57)
+    @time_now = Time.utc(2015, 07, 06, 16, 48, 57) # rubocop:disable Style/NumericLiteralPrefix
     allow(Time).to receive(:now).and_return(@time_now)
   end
 

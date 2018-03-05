@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-http-json
 #
@@ -90,7 +92,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
       end
     rescue Timeout::Error
       critical 'Connection timed out'
-    rescue => e
+    rescue StandardError => e
       critical "Connection error: #{e.message}"
     end
   end
@@ -202,7 +204,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
       end
 
       ok message
-    rescue => e
+    rescue StandardError => e
       if config[:dump_json]
         json_response = config[:pretty] ? JSON.pretty_generate(json) : json
         message = "key check failed: #{e}. Response: #{json_response}"
