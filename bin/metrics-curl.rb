@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   metrics-curl
 #
@@ -57,7 +59,7 @@ class CurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
   def run
     cmd = "curl --silent --output /dev/null #{config[:curl_args]} "
-    cmd += '-w "%{time_total},%{time_namelookup},%{time_connect},%{time_pretransfer},%{time_redirect},%{time_starttransfer},%{http_code}" '
+    cmd += '-w %{time_total},%{time_namelookup},%{time_connect},%{time_pretransfer},%{time_redirect},%{time_starttransfer},%{http_code}" '
     cmd += config[:url]
 
     output = `#{cmd}`

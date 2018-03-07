@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   metrics-http-json-deep
 #
@@ -83,7 +85,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
       if value.is_a?(Hash)
         deep_value(value, "#{scheme}.#{ekey}")
       else
-        output "#{scheme}.#{ekey}", value unless config[:numonly] && !value.is_a?(Fixnum)
+        output "#{scheme}.#{ekey}", value unless config[:numonly] && !value.is_a?(Integer)
       end
     end
   end
@@ -113,7 +115,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
           connection.request(request)
         end
       end
-    end # until
+    end
 
     metrics = Oj.load(response.body, mode: :compat)
     deep_value(metrics[config[:root]], config[:scheme])

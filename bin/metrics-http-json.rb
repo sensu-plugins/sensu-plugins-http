@@ -1,5 +1,6 @@
 #! /usr/bin/env ruby
-#  encoding: UTF-8
+# frozen_string_literal: true
+
 #   metrics-http-json.rb
 #
 # DESCRIPTION:
@@ -70,7 +71,8 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
     if config[:object]
       object = config[:object].to_s
     end
-    url = URI.encode(config[:url].to_s)
+    # TODO: figure out what to do here
+    url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
     begin
       r = RestClient.get url
       metric_pair_array = metric_pair_input.split(/,/)

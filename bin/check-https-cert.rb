@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-https-cert
 #
@@ -114,7 +116,7 @@ class CheckHttpCert < Sensu::Plugin::Check::CLI
         ok "TLS/SSL certificate expires on #{@cert.not_after} - #{days_until} days left."
       end
     end
-  rescue
+  rescue StandardError
     critical "Could not connect to #{config[:url]}"
   end
 end

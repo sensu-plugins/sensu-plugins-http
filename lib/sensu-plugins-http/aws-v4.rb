@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SensuPluginsHttp
   module AwsV4
     # Returns a modified request object with AWS v4 signature headers

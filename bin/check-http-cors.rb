@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #
 #   check-http-cors
 #
@@ -79,7 +81,7 @@ class CheckCORS < Sensu::Plugin::Check::CLI
       end
     rescue Timeout::Error
       critical 'Connection timed out'
-    rescue => e
+    rescue StandardError => e
       critical "Connection error: #{e.message}"
     end
   end
