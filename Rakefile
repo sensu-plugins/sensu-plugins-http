@@ -2,6 +2,7 @@
 
 require 'bundler/gem_tasks'
 require 'github/markup'
+require 'kitchen/rake_tasks'
 require 'redcarpet'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
@@ -37,4 +38,9 @@ task :check_binstubs do
   end
 end
 
-task default: %i[spec make_bin_executable yard rubocop check_binstubs]
+Kitchen::RakeTasks.new
+desc 'Alias for kitchen:all'
+task integration: 'kitchen:all'
+
+task default: %i[spec make_bin_executable yard rubocop check_binstubs integration]
+task quick: %i[make_bin_executable yard rubocop check_binstubs]
