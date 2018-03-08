@@ -1,6 +1,7 @@
 ---
 driver:
-  name: vagrant
+  name: docker
+  use_sudo: false
 
 provisioner:
   name: shell
@@ -8,10 +9,21 @@ provisioner:
   script: test/fixtures/bootstrap.sh
 
 verifier:
-  ruby_bindir: <%= ENV['MY_RUBY_HOME'] || '/opt/sensu/embedded' %>/bin
+  ruby_bindir: /usr/local/bin
 
 platforms:
-  - name: ubuntu-14.04
+  - name: debian-8
 
 suites:
-  - name: default
+  - name: ruby-21
+    driver:
+      image: ruby:2.1-slim
+  - name: ruby-22
+    driver:
+      image: ruby:2.2-slim
+  - name: ruby-230
+    driver:
+      image: ruby:2.3.0-slim
+  - name: ruby-241
+    driver:
+      image: ruby:2.4.1-slim

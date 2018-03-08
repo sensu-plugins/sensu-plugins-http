@@ -5,6 +5,12 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Fixed
+- most of the scripts failed when `# frozen_string_literal: true` was set because `mixlib-cli` does not support this. This reverts the old behavior in the checks but leaves libs which were unaffected alone (@majormoses)
+
+### Added
+- integration testing skel and added some tests (@majormoses)
+
 ## [2.8.1] 2018-03-07
 ### Security
 - updated rubocop dependency to `~> 0.51.0` per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8418. (@majormoses)

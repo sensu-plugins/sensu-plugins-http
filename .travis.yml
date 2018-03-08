@@ -1,14 +1,16 @@
-language: ruby
 sudo: required
-dist: trusty
+language: ruby
 cache:
 - bundler
+before_install:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - gem install bundler -v 1.15
 install:
 - bundle install
 rvm:
 - 2.1
 - 2.2
-- 2.3
+- 2.3.0
 - 2.4.1
 notifications:
   email:
@@ -17,14 +19,10 @@ notifications:
     on_success: change
     on_failure: always
 script:
-  - rvm use --default $TRAVIS_RUB_VERSION
-  - echo 'export PATH="$PATH:/home/travis/.rvm/bin"' | sudo tee -a /etc/profile
-  - echo 'source /home/travis/.rvm/scripts/rvm' | sudo tee -a /etc/profile
-  - bundle exec rake default
-  - bundle exec kitchen test
-  - sudo chown -R travis:travis /home/travis/.rvm
   - gem build sensu-plugins-http.gemspec
   - gem install sensu-plugins-http-*.gem
+  - bundle exec rake quick
+  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 deploy:
   provider: rubygems
   api_key:
@@ -35,7 +33,7 @@ deploy:
     all_branches: true
     rvm: 2.1
     rvm: 2.2
-    rvm: 2.3
+    rvm: 2.3.0
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-http
 

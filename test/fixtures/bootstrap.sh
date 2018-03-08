@@ -6,22 +6,34 @@
 
 set -e
 
+apt-get update
+apt-get install -y wget
+
 source /etc/profile
 DATA_DIR=/tmp/kitchen/data
-RUBY_HOME=${MY_RUBY_HOME:-/opt/sensu/embedded}
+RUBY_HOME=${MY_RUBY_HOME}
 
-if [ "$RUBY_HOME" = "/opt/sensu/embedded" ] && [ ! -d $RUBY_HOME ]; then
-  wget -q http://repositories.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
-  echo "deb http://repositories.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
-  apt-get update
-  apt-get install -y sensu
-else
-  apt-get update
-fi
+# Set the locale
+apt-get install -y locales
+locale-gen en_US.UTF-8
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US:en"
+export LC_ALL="en_US.UTF-8"
+
+# if [[ "$RUBY_HOME" = "/opt/sensu/embedded" ]] && [[ ! -d $RUBY_HOME ]]; then
+#   wget -q http://repositories.sensuapp.org/apt/pubkey.gpg -O- | apt-key add -
+#   echo "deb http://repositories.sensuapp.org/apt sensu main" > /etc/apt/sources.list.d/sensu.list
+#   apt-get update
+#   apt-get install -y sensu
+# else
+#   apt-get update
+# fi
 
 apt-get install -y nginx build-essential
 service nginx status || service nginx start
-rm /etc/nginx/sites-enabled/default
+if [[ -f /etc/nginx/sites-enabled/default ]]; then
+  rm /etc/nginx/sites-enabled/default
+fi
 echo "
   server {
     listen 80;
@@ -76,5 +88,5 @@ echo "
 service nginx restart
 
 cd $DATA_DIR
-SIGN_GEM=false $RUBY_HOME/bin/gem build sensu-plugins-http.gemspec
-$RUBY_HOME/bin/gem install sensu-plugins-http-*.gem
+SIGN_GEM=false gem build sensu-plugins-http.gemspec
+gem install sensu-plugins-http-*.gem
