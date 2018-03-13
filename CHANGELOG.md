@@ -5,20 +5,21 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [2.8.2] - 2018-03-13
 ### Fixed
 - most of the scripts failed when `# frozen_string_literal: true` was set because `mixlib-cli` does not support this. This reverts the old behavior in the checks but leaves libs which were unaffected alone (@majormoses)
 
 ### Added
 - integration testing skel and added some tests (@majormoses)
 
-## [2.8.1] 2018-03-07
+## [2.8.1] - 2018-03-07
 ### Security
 - updated rubocop dependency to `~> 0.51.0` per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8418. (@majormoses)
 
 ### Changed
 - appeased the cops, updated cop config, and created TODOs for refactoring (@majormoses)
 
-## [2.8.0] 2018-02-17
+## [2.8.0] - 2018-02-17
 ### Added
 - Add new options `--dump-json` to dump json response on failure when enable. default: false (@jplindquist)
 - Add new `--pretty` option for pretty format json response when `--dump-json` is enabled. default: false (@jplindquist)
@@ -176,7 +177,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.2...HEAD
+[2.8.2]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.6.0...2.7.0
