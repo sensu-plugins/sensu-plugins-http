@@ -58,7 +58,7 @@ class CurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: "#{Socket.gethostname}.curl_timings"
 
   def run
-    cmd = "curl --silent --output /dev/null #{config[:curl_args]} "
+    cmd = "LC_NUMERIC=C curl --silent --output /dev/null #{config[:curl_args]} "
     cmd += '-w "%{time_total},%{time_namelookup},%{time_connect},%{time_pretransfer},%{time_redirect},%{time_starttransfer},%{http_code}" '
     cmd += config[:url]
 
