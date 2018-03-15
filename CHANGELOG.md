@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [2.8.3] - 2018-03-14
 ### Fixed
 - `metrics-curl.rb`: fix shell quoting problem at execution and parse correctly curl metrics on non-C locale. (@multani)
 
@@ -179,7 +181,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.2...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...HEAD
+[2.8.3]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.7.0...2.8.0
