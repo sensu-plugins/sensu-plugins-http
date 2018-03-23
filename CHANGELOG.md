@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Security
+- updated yard dependency to `~> 0.9.11` per: https://nvd.nist.gov/vuln/detail/CVE-2017-17042 (@majormoses)
+
 ## [2.8.3] - 2018-03-14
 ### Fixed
 - `metrics-curl.rb`: fix shell quoting problem at execution and parse correctly curl metrics on non-C locale. (@multani)
