@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [2.8.4] - 2018-03-27
 ### Security
 - updated yard dependency to `~> 0.9.11` per: https://nvd.nist.gov/vuln/detail/CVE-2017-17042 (@majormoses)
 
@@ -185,6 +186,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Initial release
 
 [Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...HEAD
+[2.8.4]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...2.8.4
 [2.8.3]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.0...2.8.1
