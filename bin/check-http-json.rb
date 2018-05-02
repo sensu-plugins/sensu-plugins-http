@@ -28,6 +28,9 @@
 #   greater than 10
 #      ./check-http-json.rb -u http://my.site.com/metric.json --key page.totalElements --value-greater-than 10
 #
+#   Check that will POST json
+#      ./check-http-json.rb -u http://my.site.com/metric.json -m POST --header 'Content-type: application/json' --post-body '{"serverId": "myserver"}'
+#
 # NOTES:
 #   Based on Check HTTP by Sonian Inc.
 #
@@ -53,6 +56,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :port, short: '-P PORT', proc: proc(&:to_i)
   option :method, short: '-m GET|POST'
   option :postbody, short: '-b /file/with/post/body'
+  option :post_body, long: '--post-body VALUE'
   option :header, short: '-H HEADER', long: '--header HEADER'
   option :ssl, short: '-s', boolean: true, default: false
   option :insecure, short: '-k', boolean: true, default: false
@@ -163,6 +167,9 @@ class CheckJson < Sensu::Plugin::Check::CLI
     if config[:postbody]
       post_body = IO.readlines(config[:postbody])
       req.body = post_body.join
+    end
+    if config[:post_body]
+      req.body = config[:post_body]
     end
     unless config[:user].nil? && config[:password].nil?
       req.basic_auth config[:user], config[:password]
