@@ -5,6 +5,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+
+## [2.9.0] - 2018-05-03
 ### Added
 - `check-http-json.rb`: add option `--post-body` to include a post body (@andy-s-clark)
 
@@ -188,7 +190,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.9.0...HEAD
+[2.9.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.4...2.9.0
 [2.8.4]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...2.8.4
 [2.8.3]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.1...2.8.2
