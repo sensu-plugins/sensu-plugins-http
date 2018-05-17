@@ -24,6 +24,9 @@
 #   Pattern check - expect a 200 response and the string 'OK' in the body
 #   check-http.rb -u http://my.site.com/health -q 'OK'
 #
+#   Check if a response is greater than the specified minimum value
+#   check-http.rb -u https://my.site.com/redirect --min-bytes 10
+#
 #   Check response code - expect a 301 response
 #   check-http.rb -u https://my.site.com/redirect --response-code 301 -r
 #
@@ -195,6 +198,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Check the response contains exactly BYTES bytes',
          proc: proc(&:to_i)
 
+  option :min_bytes,
+         short: '-g BYTES',
+         long: '--min-bytes BYTES',
+         description: 'Check the response contains at least BYTES bytes',
+         proc: proc(&:to_i)
+
   option :response_code,
          long: '--response-code CODE',
          description: 'Check for a specific response code'
@@ -336,6 +345,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     if config[:require_bytes] && res.body.length != config[:require_bytes]
       critical "Response was #{res.body.length} bytes instead of #{config[:require_bytes]}" + body
+    end
+
+    if config[:min_bytes] && res.body.length < config[:min_bytes]
+      critical "Response was #{res.body.length} bytes instead of the indicated minimum #{config[:min_bytes]}" + body
     end
 
     unless warn_cert_expire.nil?

@@ -5,6 +5,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Added
+- `check-http.rb`: add option `--min-bytes` to check if a response is greater than minimum specified value (@lisfo4ka)
 
 ## [2.9.0] - 2018-05-03
 ### Added
