@@ -27,6 +27,9 @@
 #   Check if a response is greater than the specified minimum value
 #   check-http.rb -u https://my.site.com/redirect --min-bytes 10
 #
+#   Check response code - expect a 200 or 429 response
+#   check-http.rb -u https://my.site.com --response-code 200,429
+#
 #   Check response code - expect a 301 response
 #   check-http.rb -u https://my.site.com/redirect --response-code 301 -r
 #
@@ -204,9 +207,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Check the response contains at least BYTES bytes',
          proc: proc(&:to_i)
 
-  option :response_code,
+  option :response_codes,
          long: '--response-code CODE',
-         description: 'Check for a specific response code'
+         description: 'Check for a specific response code.  ' \
+                      'CODE can be a comma-separated list of accepted codes (e.g., 200,429)',
+         default: [],
+         proc: proc { |val| val.split(',').collect(&:strip).reject(&:empty?) }
 
   option :proxy_url,
          long: '--proxy-url PROXY_URL',
@@ -383,14 +389,14 @@ class CheckHttp < Sensu::Plugin::Check::CLI
         else
           critical "#{res.code}, checksum did not match #{config[:sha256checksum]} in #{size} bytes: #{res.body[0...200]}..."
         end
-      else
-        ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
+      elsif config[:response_codes].empty?
+        ok("#{res.code}, #{size} bytes" + body)
       end
     when /^3/
       if config[:redirectok] || config[:redirectto]
         if config[:redirectok]
           # #YELLOW
-          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable BlockNesting
+          ok("#{res.code}, #{size} bytes" + body) if config[:response_codes].empty? # rubocop:disable BlockNesting
         elsif config[:redirectto]
           # #YELLOW
           if config[:redirectto] == res['Location'] # rubocop:disable BlockNesting
@@ -403,14 +409,13 @@ class CheckHttp < Sensu::Plugin::Check::CLI
         warning res.code + body
       end
     when /^4/, /^5/
-      critical(res.code + body) unless config[:response_code]
+      critical(res.code + body) if config[:response_codes].empty?
     else
-      warning(res.code + body) unless config[:response_code]
+      warning(res.code + body) if config[:response_codes].empty?
     end
 
-    if config[:response_code] && config[:response_code] == res.code
+    if config[:response_codes].include?(res.code)
       ok "#{res.code}, #{size} bytes" + body
-
     else
       critical res.code + body
     end
