@@ -74,6 +74,11 @@ class CheckJson < Sensu::Plugin::Check::CLI
   option :dump_json, short: '-d', long: '--dump-json', boolean: true, default: false
   option :pretty, long: '--pretty', boolean: true, default: false
 
+  option :response_code,
+         long: '--response-code REGEX',
+         description: "Check for a specific response code REGEX",
+         default: '^2'
+
   def run
     if config[:url]
       uri = URI.parse(config[:url])
@@ -182,7 +187,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     end
     res = http.request(req)
 
-    unless res.code =~ /^2/
+    if res.code !~ /#{config[:response_code]}/
       critical "http code: #{res.code}: body: #{res.body}" if config[:whole_response]
       critical res.code
     end
