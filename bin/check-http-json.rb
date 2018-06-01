@@ -76,8 +76,8 @@ class CheckJson < Sensu::Plugin::Check::CLI
 
   option :response_code,
          long: '--response-code REGEX',
-         description: "Check for a specific response code REGEX",
-         default: '^2'
+         description: 'Critical if HTTP response code does not match REGEX',
+         default: '^2([0-9]{2})$'
 
   def run
     if config[:url]

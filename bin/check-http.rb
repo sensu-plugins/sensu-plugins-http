@@ -205,8 +205,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          proc: proc(&:to_i)
 
   option :response_code,
-         long: '--response-code CODE',
-         description: 'Check for a specific response code'
+         long: '--response-code REGEX',
+         description: 'Critical if HTTP response code does not match REGEX'
 
   option :proxy_url,
          long: '--proxy-url PROXY_URL',
@@ -408,7 +408,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       warning(res.code + body) unless config[:response_code]
     end
 
-    if config[:response_code] && config[:response_code] == res.code
+    if config[:response_code] && res.code =~ /#{config[:response_code]}/
       ok "#{res.code}, #{size} bytes" + body
 
     else
