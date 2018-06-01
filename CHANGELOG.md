@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Added
 - `check-http-json.rb`: add option `--response-code` for checking the HTTP response code
+- `check-http.rb`: modify option `--response-code` to accept a regex
 
 ## [2.10.0] - 2018-05-23
 ### Added
