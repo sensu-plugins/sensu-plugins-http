@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [2.11.0] - 2018-06-04
 ### Added
 - `check-http-json.rb`: add option `--response-code` for checking the HTTP response code
 - `check-http.rb`: modify option `--response-code` to accept a regex
@@ -196,7 +198,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.10.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.11.0...HEAD
+[2.11.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.10.0...2.11.0
 [2.10.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.9.0...2.10.0
 [2.9.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.4...2.9.0
 [2.8.4]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.3...2.8.4
