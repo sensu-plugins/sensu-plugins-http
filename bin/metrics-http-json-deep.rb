@@ -85,7 +85,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
       if value.is_a?(Hash)
         deep_value(value, "#{scheme}.#{ekey}")
       else
-        output "#{scheme}.#{ekey}", value unless config[:numonly] && !value.is_a?(Integer)
+        output "#{scheme}.#{ekey}", value unless config[:numonly] && !value.is_a?(Numeric)
       end
     end
   end
