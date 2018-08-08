@@ -85,18 +85,16 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--floats DECIMAL_PLACES',
          proc: proc(&:to_i),
          default: 10
-  
+
   def deep_value(hash, scheme = '')
     hash.each do |key, value|
       ekey = key.gsub(/\s/, '_')
       if value.is_a?(Hash)
         deep_value(value, "#{scheme}.#{ekey}")
+      elsif config[:numonly] && value.is_a?(Numeric)
+        output "#{scheme}.#{ekey}", value.round(config[:decimal_places])
       else
-        if config[:numonly] && value.is_a?(Numeric)
-          output "#{scheme}.#{ekey}", value.round(config[:decimal_places])
-        else
-          output "#{scheme}.#{ekey}", value
-        end
+        output "#{scheme}.#{ekey}", value
       end
     end
   end
