@@ -80,7 +80,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
          long: '--number'
 
   option :decimal_places,
-         description: 'Number of decimal places to allow, use with --number',
+         description: 'Number of decimal places to allow, to be used with --number',
          short: '-f DECIMAL_PLACES',
          long: '--floats DECIMAL_PLACES',
          proc: proc(&:to_i),
