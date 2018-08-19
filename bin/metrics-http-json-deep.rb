@@ -84,7 +84,7 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-f DECIMAL_PLACES',
          long: '--floats DECIMAL_PLACES',
          proc: proc(&:to_i),
-         default: 10
+         default: 4
 
   def deep_value(hash, scheme = '')
     hash.each do |key, value|

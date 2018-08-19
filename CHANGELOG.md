@@ -4,8 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+
+
+## [3.0.0] - 2018-08-19
+### Breaking Changes
+- removed ruby `< 2.3` support as they are EOL per our support [policy](https://github.com/sensu/sensu-docs/blob/master/content/plugins/1.0/faq.md#what-is-the-policy-on-supporting-end-of-lifeeol-ruby-versions) (@majormoses)
+- bumped dependency of `sensu-plugin` to 2.x you can read about it  [here](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v145---2017-03-07) (@majormoses)
+
 ### Changed
-- `metrics-http-json-deep.rb`: add option `--floats` to control the number of decimal places (default to 10), for use with `--number`
+- `metrics-http-json-deep.rb`: add option `--floats` to control the number of decimal places (default to 4), for use with `--number` (@CosmoPennypacker)
 
 ## [2.11.0] - 2018-06-04
 ### Added
@@ -200,7 +208,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.11.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.11.0...3.0.0
 [2.11.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.10.0...2.11.0
 [2.10.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.9.0...2.10.0
 [2.9.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.8.4...2.9.0

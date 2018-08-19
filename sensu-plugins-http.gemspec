@@ -27,12 +27,12 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
-  s.required_ruby_version  = '>= 2.1.0'
+  s.required_ruby_version  = '>= 2.3.0'
   s.summary                = 'Sensu plugins for various http monitors and metrics'
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.version                = SensuPluginsHttp::Version::VER_STRING
 
-  s.add_runtime_dependency 'sensu-plugin', '~> 1.2'
+  s.add_runtime_dependency 'sensu-plugin', '~> 2.5'
 
   s.add_runtime_dependency 'aws-sdk', '~> 2.3'
   s.add_runtime_dependency 'rest-client', '~> 2.0.2'
