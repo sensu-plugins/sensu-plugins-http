@@ -91,8 +91,8 @@ class JsonDeepMetrics < Sensu::Plugin::Metric::CLI::Graphite
       ekey = key.gsub(/\s/, '_')
       if value.is_a?(Hash)
         deep_value(value, "#{scheme}.#{ekey}")
-      elsif config[:numonly] && value.is_a?(Numeric)
-        output "#{scheme}.#{ekey}", value.round(config[:decimal_places])
+      elsif config[:numonly]
+        output "#{scheme}.#{ekey}", value.round(config[:decimal_places]) if value.is_a?(Numeric)
       else
         output "#{scheme}.#{ekey}", value
       end
