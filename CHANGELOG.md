@@ -4,10 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
-### Changed
-- `metrics-http-json-deep.rb`: add option `--floats` to control the number of decimal places (default to 10), for use with `--number`
-
-
+### Fixed
+- `metrics-http-json-deep.rb`: properly filter out non numeric values (@CosmoPennypacker)
 
 ## [3.0.0] - 2018-08-19
 ### Breaking Changes
