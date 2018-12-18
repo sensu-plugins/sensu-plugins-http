@@ -43,7 +43,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_development_dependency 'json',                      '< 2.0.0'
   s.add_development_dependency 'kitchen-docker',            '~> 2.6'
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
-  s.add_development_dependency 'kitchen-vagrant',           '~> 0.19'
+  s.add_development_dependency 'kitchen-vagrant',           '~> 1.3'
   s.add_development_dependency 'pry',                       '~> 0.10'
   s.add_development_dependency 'rake',                      '~> 12.3'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
