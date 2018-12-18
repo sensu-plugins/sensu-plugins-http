@@ -45,7 +45,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
   s.add_development_dependency 'kitchen-vagrant',           '~> 0.19'
   # locked to keep ruby 2.1 support, this is pulled in by test-kitchen
-  s.add_development_dependency 'mixlib-shellout',           ['< 2.3.0', '~> 2.2']
+  s.add_development_dependency 'mixlib-shellout',           '~> 2.2', '< 2.5.0'
   s.add_development_dependency 'pry',                       '~> 0.10'
   s.add_development_dependency 'rake',                      '~> 12.3'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
