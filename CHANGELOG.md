@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+## [4.0.0] - 2018-12-17
+### Breaking Changes
+- bumped dependency of `sensu-plugin` to `~> 3.0` (@dependabot) @majormoses
+
 ## [3.0.1] - 2018-09-04
 ### Fixed
 - `metrics-http-json-deep.rb`: properly filter out non numeric values (@CosmoPennypacker)
@@ -210,7 +214,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.11.0...3.0.0
 [2.11.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.10.0...2.11.0
