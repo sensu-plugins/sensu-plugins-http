@@ -165,7 +165,19 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          short: '-t SECS',
          long: '--timeout SECS',
          proc: proc(&:to_i),
-         description: 'Set the timeout',
+         description: 'Set the total execution timeout in seconds',
+         default: 15
+
+  option :open_timeout,
+         long: '--open-timeout SECS',
+         proc: proc(&:to_i),
+         description: 'Number of seconds to wait for the connection to open',
+         default: 15
+
+  option :read_timeout,
+         long: '--read-timeout SECS',
+         proc: proc(&:to_i),
+         description: 'Number of seconds to wait for one block to be read',
          default: 15
 
   option :redirectok,
@@ -254,6 +266,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       Timeout.timeout(config[:timeout]) do
         acquire_resource
       end
+    rescue Net::OpenTimeout
+      critical 'Request timed out opening connection'
+    rescue Net::ReadTimeout
+      critical 'Request timed out reading data'
     rescue Timeout::Error
       critical 'Request timed out'
     rescue StandardError => e
@@ -279,8 +295,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     else
       http = Net::HTTP.new(config[:host], config[:port])
     end
-    http.read_timeout = config[:timeout]
-    http.open_timeout = config[:timeout]
+    http.read_timeout = config[:read_timeout]
+    http.open_timeout = config[:open_timeout]
     http.ssl_timeout = config[:timeout]
     http.continue_timeout = config[:timeout]
     http.keep_alive_timeout = config[:timeout]
