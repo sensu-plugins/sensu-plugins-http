@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changed
 - `check-http.rb`: Add options to set open-timeout and read-timeout for Net:HTTP. Improve output on what Net::HTTP timeout was encountered.
+- `check-http.rb`: Use ruby DNS resolver, and set DNS resolution timeout.
 
 ### Removed
 - removed codeclimate (@tmonk42)

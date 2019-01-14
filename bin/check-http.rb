@@ -59,6 +59,7 @@ require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
 require 'digest'
+require 'resolv-replace'
 
 #
 # Check HTTP
@@ -261,6 +262,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       end
       config[:port] ||= config[:ssl] ? 443 : 80
     end
+
+    # Use Ruby DNS Resolver and set DNS resolution timeout to 800ms
+    dns_resolver = Resolv::DNS.new
+    dns_resolver.timeouts = 0.8
+    Resolv::DefaultResolver.replace_resolvers([dns_resolver])
 
     begin
       Timeout.timeout(config[:timeout]) do
