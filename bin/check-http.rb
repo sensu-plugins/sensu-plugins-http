@@ -181,6 +181,12 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Number of seconds to wait for one block to be read',
          default: 15
 
+  option :dns_timeout,
+         long: '--dns-timeout SECS',
+         proc: proc(&:to_f),
+         description: 'Number of seconds to allow for DNS resolution. Accepts decimal number.',
+         default: 0.8
+
   option :redirectok,
          short: '-r',
          boolean: true,
@@ -263,10 +269,11 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       config[:port] ||= config[:ssl] ? 443 : 80
     end
 
-    # Use Ruby DNS Resolver and set DNS resolution timeout to 800ms
+    # Use Ruby DNS Resolver and set DNS resolution timeout to dns_timeout value
+    hosts_resolver = Resolv::Hosts.new
     dns_resolver = Resolv::DNS.new
-    dns_resolver.timeouts = 0.8
-    Resolv::DefaultResolver.replace_resolvers([dns_resolver])
+    dns_resolver.timeouts = config[:dns_timeout]
+    Resolv::DefaultResolver.replace_resolvers([hosts_resolver, dns_resolver])
 
     begin
       Timeout.timeout(config[:timeout]) do
