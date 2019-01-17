@@ -4,9 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Added
+- `check-http.rb`: Add options to set `--open-timeout` and `--read-timeout` for Net:HTTP. Additionally rescue `Net::OpenTimeout` and `Net::ReadTimeout` exception classes (@johanek)
+- `check-http.rb`: exposed `--dns-timeout` for Ruby DNS Resolver. (@johanek)
+
 ### Changed
-- `check-http.rb`: Add options to set open-timeout and read-timeout for Net:HTTP. Improve output on what Net::HTTP timeout was encountered.
-- `check-http.rb`: Use ruby DNS resolver, and set DNS resolution timeout.
+- `check-http.rb`: switched to using rubies DNS resolver to allow catching DNS failures when Net::HTTP establishes connection. (@johanek)
 
 ## [4.0.0] - 2018-12-17
 ### Breaking Changes
