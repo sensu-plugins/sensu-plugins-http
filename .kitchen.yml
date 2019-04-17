@@ -17,7 +17,7 @@ platforms:
 suites:
   - name: ruby-230
     driver:
-      image: ruby:2.4-slim
+      image: ruby:2.4-slim-jessie
   - name: ruby-241
     driver:
-      image: ruby:2.4-slim
+      image: ruby:2.4-slim-jessie
