@@ -1,5 +1,7 @@
 sudo: required
 language: ruby
+services:
+- docker
 cache:
 - bundler
 before_install:
@@ -20,9 +22,11 @@ script:
   - gem build sensu-plugins-http.gemspec
   - gem install sensu-plugins-http-*.gem
   - bundle exec rake quick
-  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
+#  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
+before_deploy:
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
-  provider: rubygems
+- provider: rubygems
   api_key:
     secure: gEAG8w7v8luKjpTp1NvNQ3qMUoGpfsNWmBByhwXq+A/B2KeaLd5UnUSEFJIK2JkxLkTr1rIpiWxBQmuHKN+RReJm8nij0Awt+oHLKruWw3rOht+fnlXHlI67njbXwnmQPuG44SOX5tqesWzwMBd35dIrYNJyygvwSlDXIOQtHUA=
   gem: sensu-plugins-http
@@ -32,7 +36,13 @@ deploy:
     rvm: 2.3.0
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-http
-
+- provider: script
+  script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-http
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1
 env:
   global:
     - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
