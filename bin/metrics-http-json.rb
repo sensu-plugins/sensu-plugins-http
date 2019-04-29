@@ -89,10 +89,10 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
     url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
     begin
       r = RestClient::Request.execute(
-                                      url: url,
-                                      method: :get,
-                                      verify_ssl: !config[:insecure]
-                                     )
+        url: url,
+        method: :get,
+        verify_ssl: !config[:insecure]
+      )
 
       puts "Http response: #{r}" if config[:debug]
       metric_pair_array = metric_pair_input.split(/,/)
