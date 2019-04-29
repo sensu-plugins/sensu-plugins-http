@@ -77,7 +77,6 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          long: '--debug',
          default: false
 
-
   def run
     puts "args config: #{config}" if config[:debug]
 
@@ -90,9 +89,9 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
     url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
     begin
       r = RestClient::Request.execute(
-                                       url: url,
-                                       method: :get,
-                                       verify_ssl: !config[:insecure]
+                                      url: url,
+                                      method: :get,
+                                      verify_ssl: !config[:insecure]
                                      )
 
       puts "Http response: #{r}" if config[:debug]
