@@ -66,7 +66,7 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          long: '--object OBJECT'
 
   option :insecure,
-         description: 'By default, every SSL connection made is verified to be secure. This option allows you to proceed and operate even for server connections otherwise considered insecure.',
+         description: 'By default, every SSL connection made is verified to be secure. This option allows you to disable the verification',
          short: '-k',
          long: '--insecure',
          boolean: true,
@@ -77,10 +77,9 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          long: '--debug',
          default: false
 
-    
 
   def run
-    puts "args config: #{config.to_s}" if config[:debug]
+    puts "args config: #{config}" if config[:debug]
 
     scheme = config[:scheme].to_s
     metric_pair_input = config[:metric].to_s
@@ -91,13 +90,12 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
     url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
     begin
       r = RestClient::Request.execute(
-            :url => url, 
-            :method => :get, 
-            #:headers => headers,
-            :verify_ssl => !config[:insecure]
-          )
+                                       url: url,
+                                       method: :get,
+                                       verify_ssl: !config[:insecure]
+                                     )
 
-      puts "Http response: #{r.to_s}" if config[:debug]
+      puts "Http response: #{r}" if config[:debug]
       metric_pair_array = metric_pair_input.split(/,/)
       metric_pair_array.each do |m|
         metric, attribute = m.to_s.split(/::/)
