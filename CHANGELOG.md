@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [5.1.0] - 2019-05-06
+### Added
 metrics-http-json.rb: Added the option to disable ssl cert verification
 metrics-http-json.rb: Added debug option to see the processing of json data
 
@@ -236,7 +239,8 @@ metrics-http-json.rb: Added debug option to see the processing of json data
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.1.0...5.0.0
 [4.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.1...4.0.0
