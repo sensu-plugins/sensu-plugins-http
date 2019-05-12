@@ -15,7 +15,9 @@ YARD::Rake::YardocTask.new do |t|
   t.options = %w[--markup-provider=redcarpet --markup=markdown --main=README.md --files CHANGELOG.md]
 end
 
-RuboCop::RakeTask.new
+RuboCop::RakeTask.new do |r|
+  r.options = %w[--display-cop-names --extra-details --display-style-guide]
+end
 
 RSpec::Core::RakeTask.new(:spec) do |r|
   r.pattern = FileList['**/**/*_spec.rb']

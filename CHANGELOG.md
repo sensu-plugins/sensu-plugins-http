@@ -5,6 +5,20 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Breaking Changes
+- `check-http.rb`: `option[:response_code]` now defaults to a 2xx response code, this matches `check-http-json` behavior; doing so also removes the need to specify `redirectok` and a 3xx response code which is redundant. (@majormoses)
+- `check-http.rb`: you will get an `unknown` if you try to "trick" `option[:response_code]` to be empty or `nil` to "match" a nonsensical regex. There are certainly other ways to fool this but trying to save someone from a bad regex is nearly impossible. (@majormoses)
+
+### Deprecated
+- deprecated `option[:redirectok] | -r` in favor of better logic with `option[:status_code]`. At the moment all functionality around this has been removed, replaced with other logic, and notifies the user about the changes they need to make the transition. It will be fully removed after one major release, failure to update your checks will result in it failing with something along the lines of `Invalid check argument(s): invalid option: --arg-does-not-exist`. (@majormoses)
+
+### Changed
+- added `--display-cop-names --extra-details --display-style-guide` args to rubocop rake task to make life easier (@majormoses)
+- target rubocop to the version of rubies we support (@majormoses)
+- appeasing cops (@majormoses)
+- general refactor of existing functions (creating some new ones) to accomodate desired behavior with more straightforward logic (@majormoses)
+
+
 ## [5.1.0] - 2019-05-06
 ### Added
 metrics-http-json.rb: Added the option to disable ssl cert verification

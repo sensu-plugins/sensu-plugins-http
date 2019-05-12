@@ -80,6 +80,9 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
   def run
     puts "args config: #{config}" if config[:debug]
 
+    deprecations = SensuPluginsHttp::Deprecations::Messages.new
+    puts deprecations.redirect_ok if config[:redirectok]
+
     scheme = config[:scheme].to_s
     metric_pair_input = config[:metric].to_s
     if config[:object]

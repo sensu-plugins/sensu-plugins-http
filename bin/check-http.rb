@@ -190,7 +190,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
   option :redirectok,
          short: '-r',
          boolean: true,
-         description: 'Check if a redirect is ok',
+         description: 'Check if a redirect is ok. This option has been deprecated. See response_code instead.',
          default: false
 
   option :redirectto,
@@ -225,7 +225,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
   option :response_code,
          long: '--response-code REGEX',
-         description: 'Critical if HTTP response code does not match REGEX'
+         description: 'Critical if HTTP response code does not match REGEX',
+         default: '^2([0-9]{2})$'
 
   option :proxy_url,
          long: '--proxy-url PROXY_URL',
@@ -268,6 +269,9 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       end
       config[:port] ||= config[:ssl] ? 443 : 80
     end
+
+    deprecations = SensuPluginsHttp::Deprecations::Messages.new
+    puts deprecations.redirect_ok if config[:redirectok]
 
     # Use Ruby DNS Resolver and set DNS resolution timeout to dns_timeout value
     hosts_resolver = Resolv::Hosts.new
@@ -364,12 +368,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
 
     body = if config[:whole_response]
              "\n" + res.body
+           elsif config[:response_bytes]
+             "\n" + res.body[0..config[:response_bytes]]
            else
-             body = if config[:response_bytes] # rubocop:disable Lint/UselessAssignment
-                      "\n" + res.body[0..config[:response_bytes]]
-                    else
-                      ''
-                    end
+             ''
            end
 
     if config[:require_bytes] && res.body.length != config[:require_bytes]
@@ -389,59 +391,77 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     handle_response(res, size, body)
   end
 
-  def handle_response(res, size, body)
-    case res.code
-    when /^2/
-      if config[:redirectto]
-        critical "Expected redirect to #{config[:redirectto]} but got #{res.code}" + body
-      elsif config[:pattern]
-        if res.body =~ /#{config[:pattern]}/
-          ok "#{res.code}, found /#{config[:pattern]}/ in #{size} bytes" + body
-        else
-          critical "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
-        end
-      elsif config[:negpattern]
-        if res.body =~ /#{config[:negpattern]}/
-          critical "#{res.code}, found /#{config[:negpattern]}/ in #{size} bytes: #{res.body[0...200]}..."
-        else
-          ok "#{res.code}, did not find /#{config[:negpattern]}/ in #{size} bytes" + body
-        end
-      elsif config[:sha256checksum]
-        if Digest::SHA256.hexdigest(res.body).eql? config[:sha256checksum]
-          ok "#{res.code}, checksum match #{config[:sha256checksum]} in #{size} bytes" + body
-        else
-          critical "#{res.code}, checksum did not match #{config[:sha256checksum]} in #{size} bytes: #{res.body[0...200]}..."
-        end
+  def safe_redirect_regex?
+    regex = config[:response_code]
+    # if we have a negative assertion its not safe
+    # if we have a regex that does not include a string that looks like a regex
+    # => that would match a 3xx response. This logic is super weak and likely
+    # => will push me to remove regexp support either fully or only supporting
+    # => some basic/partial matching only.
+    return false if regex.include?('?!') || !regex.include?('30') || !regex.include?('3([0-9]{2})')
+    true
+  end
+
+  def handle_2xx(res, size, body)
+    if config[:redirectto]
+      critical "Expected redirect to #{config[:redirectto]} but got #{res.code}" + body
+    elsif config[:pattern]
+      if res.body =~ /#{config[:pattern]}/
+        ok "#{res.code}, found /#{config[:pattern]}/ in #{size} bytes" + body
       else
-        ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
+        critical "#{res.code}, did not find /#{config[:pattern]}/ in #{size} bytes: #{res.body[0...200]}..."
       end
-    when /^3/
-      if config[:redirectok] || config[:redirectto]
-        if config[:redirectok]
-          # #YELLOW
-          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable BlockNesting
-        elsif config[:redirectto]
-          # #YELLOW
-          if config[:redirectto] == res['Location'] # rubocop:disable BlockNesting
-            ok "#{res.code} found redirect to #{res['Location']}" + body
-          else
-            critical "Expected redirect to #{config[:redirectto]} instead redirected to #{res['Location']}" + body
-          end
-        end
+    elsif config[:negpattern]
+      if res.body =~ /#{config[:negpattern]}/
+        critical "#{res.code}, found /#{config[:negpattern]}/ in #{size} bytes: #{res.body[0...200]}..."
       else
-        warning res.code + body
+        ok "#{res.code}, did not find /#{config[:negpattern]}/ in #{size} bytes" + body
       end
-    when /^4/, /^5/
-      critical(res.code + body) unless config[:response_code]
+    elsif config[:sha256checksum]
+      if Digest::SHA256.hexdigest(res.body).eql? config[:sha256checksum]
+        ok "#{res.code}, checksum match #{config[:sha256checksum]} in #{size} bytes" + body
+      else
+        critical "#{res.code}, checksum did not match #{config[:sha256checksum]} in #{size} bytes: #{res.body[0...200]}..."
+      end
     else
-      warning(res.code + body) unless config[:response_code]
+      ok("#{res.code}, #{size} bytes" + body) unless config[:response_code]
     end
+  end
 
-    if config[:response_code] && res.code =~ /#{config[:response_code]}/
-      ok "#{res.code}, #{size} bytes" + body
-
+  def handle_3xx(res)
+    if !config[:redirectto].nil? && config[:redirectto] == res['Location'] && res.code =~ /#{config[:response_code]}/
+      ok "#{res.code}, config[:redirectto] matches redirect location of #{res['Location']}"
+    elsif !config[:redirectto].nil? && config[:redirectto] != res['Location']
+      critical "status code: #{res.code}. The redirect location specified in the check: #{config[:redirectto]} did not match the redirect location: #{res['Location']}" # rubocop:disable Metrics/LineLength
+    # TODO: this is for backwards compatibility and should be removed after we remove that option which we are deprecating
+    elsif res.code =~ /#{config[:response_code]}/ && safe_redirect_regex?
+      ok "#{res.code} matched /#{config[:response_code]}/"
     else
-      critical res.code + body
+      critical "#{res.code} did not match /#{config[:response_code]}/"
+    end
+  end
+
+  def handle_response(res, size, body)
+    unknown 'specify a response code that is not empty/nil' if config[:response_code].nil? || config[:response_code].empty?
+    case res.code
+    when /^2[0-9]{2}$/
+      handle_2xx(res, size, body)
+    when /^3[0-9]{2}$/
+      handle_3xx(res)
+    # with 4XX and 4XX response codes we only inspect the desired response code
+    # should we decide to add more logic checks we should break out into functions
+    when /^4[0-9]{2}$/, /^5[0-9]{2}$/
+      critical "#{res.code}, #{body}" if config[:response_code] =~ /#{config[:response_code]}/
+    # handle any non standard HTTP codes
+    else
+      # bail with an error if ALL of the following are true:
+      # - its a non standard HTTP response code
+      # - its not intentionally set empty
+      # - does not match the regex you have specified
+      critical "#{res.code}, #{body}" if res.code !~ /#{config[:response_code]}/
+      # if those do not match then it implicitly means you sent a non standard HTTP
+      # status code but got the response back that you expected.
+      ok "#{res.code}, #{size} bytes, body: #{body}"
     end
   end
 end

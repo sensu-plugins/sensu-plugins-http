@@ -95,6 +95,11 @@ class CheckJson < Sensu::Plugin::Check::CLI
       config[:port] ||= config[:ssl] ? 443 : 80
     end
 
+    unknown 'specify a response code that is not empty/nil' if config[:response_code].nil? || config[:response_code].empty?
+
+    deprecations = SensuPluginsHttp::Deprecations::Messages.new
+    puts deprecations.redirect_ok if config[:redirectok]
+
     begin
       Timeout.timeout(config[:timeout]) do
         acquire_resource
