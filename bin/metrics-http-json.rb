@@ -35,9 +35,9 @@
 #
 
 require 'sensu-plugin/metric/cli'
+require 'sensu/json'
 require 'rest-client'
 require 'socket'
-require 'json'
 require 'uri'
 #
 # HttpJsonGraphite - see description above
@@ -72,50 +72,66 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          boolean: true,
          default: false
 
+  option :noproxy,
+         description: 'Disable the use of any proxy enviroment variables will be used',
+         short: '-n',
+         long: '--noproxy',
+         default: nil
+
   option :debug,
          short: '-d',
          long: '--debug',
          default: false
 
-  def run
-    puts "args config: #{config}" if config[:debug]
-
+  def search_json(config, json_data)
     scheme = config[:scheme].to_s
     metric_pair_input = config[:metric].to_s
-    if config[:object]
-      object = config[:object].to_s
-    end
-    # TODO: figure out what to do here
-    url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
-    begin
-      r = RestClient::Request.execute(
-        url: url,
-        method: :get,
-        verify_ssl: !config[:insecure]
-      )
 
-      puts "Http response: #{r}" if config[:debug]
-      metric_pair_array = metric_pair_input.split(/,/)
-      metric_pair_array.each do |m|
-        metric, attribute = m.to_s.split(/::/)
-        puts "metric: #{metric}, attribute: #{attribute}" if config[:debug]
-        unless object.nil?
-          JSON.parse(r)[object].each do |k, v|
-            if k == attribute
-              output([scheme, metric].join('.'), v)
-            end
-          end
-        end
-        JSON.parse(r).each do |k, v|
-          if k == attribute
-            output([scheme, metric].join('.'), v)
-          end
+    object = config[:object].to_s if config[:object]
+
+    metric_pair_input.split(/,/).each do |m|
+      metric, attribute = m.to_s.split(/::/)
+      # puts "metric: #{metric}, attribute: #{attribute}" if config[:debug]
+      unless object.nil?
+        json_data[object].each do |k, v|
+          output([scheme, metric].join('.'), v) if k == attribute
         end
       end
+      json_data.each do |k, v|
+        if k.to_s == attribute
+          output([scheme, metric].join('.'), v)
+          break
+        end
+      end
+    end
+  end
+
+  def run
+    # TODO: figure out what to do here
+    url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
+
+    rest_args = { url: url, method: :get, verify_ssl: !config[:insecure] }
+
+    rest_args[:proxy] = nil if config[:noproxy]
+
+    begin
+      r = RestClient::Request.execute(rest_args)
+
+      puts "args config: #{config}\nHttp response: #{r}\nHttp headers: #{r.headers}" if config[:debug]
+
+      Sensu::JSON.setup!
+      json_data = Sensu::JSON.load(r)
+      # puts "json_data: #{json_data}" if config[:debug]
+
+      search_json(config, json_data)
     rescue Errno::ECONNREFUSED
       critical "#{config[:url]} is not responding"
     rescue RestClient::RequestTimeout
       critical "#{config[:url]} Connection timed out"
+    rescue OpenSSL::SSL::SSLError => e
+      critical "#{config[:url]} error: #{e}. Try adding argument --insecure"
+    rescue => e
+      critical "#{config[:url]} error: #{e.inspect} - #{e}"
     end
     ok
   end
