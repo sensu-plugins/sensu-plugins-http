@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+metrics-http-json.rb: Added the option to disable proxy
+metrics-http-json.rb: Fixed A bug where after Sensu plugin v2.1.0 you can nolonger call require 'json' in a sensu-plugin. You need to leverage require 'sensu/json' instead. See - https://github.com/sensu-plugins/sensu-plugin/issues/127
 metrics-http-json.rb: Added the option to disable ssl cert verification
 metrics-http-json.rb: Added debug option to see the processing of json data
 
