@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Fixed
+- Fix issue with JSON.parse referencing sensu-plugin subclass instead of top level ::JSON module as intended
+- Fix missing runtime dependancy on oj needed for metrics-http-json-deep.rb
 
 ## [5.1.0] - 2019-05-06
 ### Added
