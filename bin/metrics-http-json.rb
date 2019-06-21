@@ -100,13 +100,13 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
         metric, attribute = m.to_s.split(/::/)
         puts "metric: #{metric}, attribute: #{attribute}" if config[:debug]
         unless object.nil?
-          JSON.parse(r)[object].each do |k, v|
+          ::JSON.parse(r)[object].each do |k, v|
             if k == attribute
               output([scheme, metric].join('.'), v)
             end
           end
         end
-        JSON.parse(r).each do |k, v|
+        ::JSON.parse(r).each do |k, v|
           if k == attribute
             output([scheme, metric].join('.'), v)
           end
