@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Added
+- New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
+
+### Changed
+- Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
 
 ## [5.1.1] - 2019-06-21
 ### Fixed

@@ -37,6 +37,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_runtime_dependency 'aws-sdk', '~> 2.3'
   s.add_runtime_dependency 'oj', '~> 2.18'
   s.add_runtime_dependency 'rest-client', '~> 2.0.2'
+  s.add_runtime_dependency 'typhoeus', '~> 1.3.1'
 
   s.add_development_dependency 'bundler',                   '~> 1.7'
   s.add_development_dependency 'github-markup',             '~> 3.0'
