@@ -22,7 +22,7 @@
 #   #YELLOW
 #
 # NOTES:
-#   Based on: metrics-curl.rb 
+#   Based on: metrics-curl.rb
 #   by Joe Miller.
 #
 # LICENSE:
@@ -54,14 +54,14 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          required: true,
          default: "#{Socket.gethostname}.curl_timings"
   option :debug,
-         description: "Include debug output, should not use in production.",
+         description: 'Include debug output, should not use in production.',
          short: '-d',
          long: '--debug',
          default: false
   option :help,
-         short: "-h",
-         long: "--help",
-         description: "Show this message",
+         short: '-h',
+         long: '--help',
+         description: 'Show this message',
          on: :tail,
          boolean: true
   option :libcurl_options,
@@ -69,19 +69,19 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-o JSON',
          long: '--options  JSON',
          required: true,
-         default: "{}"
+         default: '{}'
   option :http_headers,
          description: 'HTTP Request Headers as key/value JSON string',
          short: '-H JSON',
          long: '--headers  JSON',
          required: true,
-         default: "{}"
+         default: '{}'
   option :http_params,
          description: 'HTTP Request Parameters as key/value JSON string',
          short: '-P JSON',
          long: '--params  JSON',
          required: true,
-         default: "{}"
+         default: '{}'
   option :http_response_error,
          description: 'return critical status (2) if http response error status encountered (>= 400)',
          short: '-c',
@@ -95,27 +95,41 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
   def run
     if config[:help]
-      puts "\nDetailed Info:\nThis wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.  You can provide additional libcurl options via the commandline using the --options argument."
+      puts "\nDetailed Info:\n"\
+           'This wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.'\
+           '  You can provide additional libcurl options via the commandline using the --options argument.'
       puts "\nOptions Examples:"
       puts "Follow Redirects: --options '{\"followlocation\": true}'"
       puts "Use Proxy: --options '{proxy: \"http://proxyurl.com\", proxyuserpwd: \"user:password\"}'"
       puts "Disable TLS Verification: '{\"ssl_verifypeer\": false}'"
       puts "\nReferences:"
-      puts "Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1"
-      puts "Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html"
-    ok
+      puts 'Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1'
+      puts 'Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html'
+      ok
     end
 
     puts "[DEBUG] args config: #{config}" if config[:debug]
+    begin
+      headers = ::JSON.parse(config[:http_headers])
+    rescue ::JSON::ParserError
+      critical "Error parsing http_headers JSON\n"
+    end
+    begin
+      params = ::JSON.parse(config[:http_params])
+    rescue ::JSON::ParserError
+      critical "Error parsing http_params JSON\n"
+    end
+    begin
+      hash = ::JSON.parse(config[:libcurl_options])
+    rescue ::JSON::ParserError
+      critical "Error parsing libcurl_options JSON\n"
+    end
 
     begin
-      headers = ::JSON.parse(config[:http_headers])  
-      params = ::JSON.parse(config[:http_params])  
-      hash = ::JSON.parse(config[:libcurl_options])  
       opts = Hash[hash.map { |k, v| [k.to_sym, v] }]
-      opts[:headers]=headers unless headers.empty?
-      opts[:params]=params unless params.empty?
-      request = Typhoeus::Request.new(config[:url],opts)
+      opts[:headers] = headers unless headers.empty?
+      opts[:params] = params unless params.empty?
+      request = Typhoeus::Request.new(config[:url], opts)
       if config[:debug]
         puts "[DEBUG] Request Options: #{request.options}"
         puts "[DEBUG] Request Base Url: #{request.base_url}"
@@ -126,18 +140,9 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
       if config[:debug]
         puts "[DEBUG] Response HTTP Code: #{response.response_code}"
         puts "[DEBUG] Response Return Code: #{response.return_code}"
-        #puts response.total_time
-        #puts response.appconnect_time
-        #puts response.namelookup_time
-        #puts response.connect_time
-        #puts response.pretransfer_time
-        #puts response.redirect_time
-        #puts response.starttransfer_time
-        #puts response.response_code
-        #puts response.return_code
       end
-    rescue
-     critical "Something went wrong\n Request Options: #{request.options}\n Request Base Url: #{request.base_url}\n Request Full Url: #{request.url}"  
+    rescue TyphoeusError
+      critical "Something went wrong\n Request Options: #{request.options}\n Request Base Url: #{request.base_url}\n Request Full Url: #{request.url}"
     end
     output "#{config[:scheme]}.time_total", response.total_time
     output "#{config[:scheme]}.time_namelookup", response.namelookup_time
@@ -146,12 +151,12 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
     output "#{config[:scheme]}.time_redirect", response.redirect_time
     output "#{config[:scheme]}.time_starttransfer", response.starttransfer_time
     output "#{config[:scheme]}.http_code", response.response_code
-    if response.response_code==0
-      critical  
-    end  
-    
-    critical if config[:http_response_error] and response.response_code >= 400
-    warning if config[:http_redirect_warning] and response.response_code.between?(300,399)
+    if response.response_code == 0
+      critical
+    end
+
+    critical if config[:http_response_error] && response.response_code >= 400
+    warning if config[:http_redirect_warning] && response.response_code.between?(300, 399)
     ok
   end
 end

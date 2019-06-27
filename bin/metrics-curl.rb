@@ -57,9 +57,10 @@ class CurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          default: "#{Socket.gethostname}.curl_timings"
 
   def run
-    exists=`type -t "curl" > /dev/null 2>&1`
-    unless $? == 0
-      critical "CRITICAL: curl executable not found in PATH on this system. If curl cannot be installed, consider using metrics_libcurl.rb instead."
+    `type -t "curl" > /dev/null 2>&1`
+    unless $CHILD_STATUS == 0
+      critical 'CRITICAL: curl executable not found in PATH on this system.'\
+               ' If curl cannot be installed, consider using metrics_libcurl.rb instead.'
     end
 
     cmd = "LC_NUMERIC=C curl --silent --output /dev/null #{config[:curl_args]} "
