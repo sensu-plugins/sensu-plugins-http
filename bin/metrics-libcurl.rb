@@ -44,14 +44,13 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
   option :url,
          short: '-u URL',
          long: '--url URL',
-         description: 'valid cUrl url to connect',
+         description: 'valid cUrl url to connect (default: http://127.0.0.1:80/)',
          default: 'http://127.0.0.1:80/'
 
   option :scheme,
          description: 'Metric naming scheme, text to prepend to metric',
          short: '-s SCHEME',
          long: '--scheme SCHEME',
-         required: true,
          default: "#{Socket.gethostname}.curl_timings"
   option :debug,
          description: 'Include debug output, should not use in production.',
@@ -62,19 +61,16 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          description: 'Libcurl Options as a key/value JSON string',
          short: '-o JSON',
          long: '--options  JSON',
-         required: true,
          default: '{}'
   option :http_headers,
          description: 'HTTP Request Headers as key/value JSON string',
          short: '-H JSON',
          long: '--headers  JSON',
-         required: true,
          default: '{}'
   option :http_params,
          description: 'HTTP Request Parameters as key/value JSON string',
          short: '-P JSON',
          long: '--params  JSON',
-         required: true,
          default: '{}'
   option :http_response_error,
          description: 'return critical status (2) if http response error status encountered (>= 400)',
