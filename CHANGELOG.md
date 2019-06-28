@@ -10,6 +10,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Changed
 - Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
 
+### Fixed
+- Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
+
 ## [5.1.1] - 2019-06-21
 ### Fixed
 - Fix issue with JSON.parse referencing sensu-plugin subclass instead of top level ::JSON module as intended
