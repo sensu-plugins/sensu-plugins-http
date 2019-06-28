@@ -58,12 +58,6 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-d',
          long: '--debug',
          default: false
-  option :help,
-         short: '-h',
-         long: '--help',
-         description: 'Show this message',
-         on: :tail,
-         boolean: true
   option :libcurl_options,
          description: 'Libcurl Options as a key/value JSON string',
          short: '-o JSON',
@@ -92,6 +86,13 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          short: '-w',
          long: '--warn_redirect',
          default: false
+  option :help,
+         short: '-h',
+         long: '--help',
+         description: 'Show this message',
+         on: :tail,
+         boolean: true,
+         show_options: true
 
   def run
     if config[:help]
