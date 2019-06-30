@@ -37,6 +37,8 @@ require 'sensu-plugin/metric/cli'
 require 'typhoeus'
 require 'json'
 
+
+
 #
 # Libcurl Metrics
 #
@@ -90,18 +92,26 @@ class LibcurlMetrics < Sensu::Plugin::Metric::CLI::Graphite
          boolean: true,
          show_options: true
 
+  def usage_details
+    <<~USAGE
+      Detailed Info:
+        This wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.
+        You can provide additional libcurl options via the commandline using the --options argument.
+
+      Options Examples:
+        Follow Redirects: --options '{\"followlocation\": true}'
+        Use Proxy: --options '{proxy: \"http://proxyurl.com\", proxyuserpwd: \"user:password\"}'
+        Disable TLS Verification: '{\"ssl_verifypeer\": false}'
+
+      References:
+        Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1
+        Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html
+    USAGE
+  end
+
   def run
     if config[:help]
-      puts "\nDetailed Info:\n"\
-           'This wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.'\
-           '  You can provide additional libcurl options via the commandline using the --options argument.'
-      puts "\nOptions Examples:"
-      puts "Follow Redirects: --options '{\"followlocation\": true}'"
-      puts "Use Proxy: --options '{proxy: \"http://proxyurl.com\", proxyuserpwd: \"user:password\"}'"
-      puts "Disable TLS Verification: '{\"ssl_verifypeer\": false}'"
-      puts "\nReferences:"
-      puts 'Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1'
-      puts 'Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html'
+      puts usage_details
       ok
     end
 

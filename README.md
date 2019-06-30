@@ -61,19 +61,18 @@ Usage: metrics-libcurl.rb (options)
     -s, --scheme SCHEME              Metric naming scheme, text to prepend to metric
     -u, --url URL                    valid cUrl url to connect (default: http://127.0.0.1:80/)
     -h, --help                       Show this message
-
 Detailed Info:
-This wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.  You can provide additional libcurl options via the commandline using the --options argument.
+  This wrapper makes use of libcurl directly instead of the curl executable by way of the Typhoeus RubyGem.
+  You can provide additional libcurl options via the commandline using the --options argument.
 
 Options Examples:
-Follow Redirects: --options '{"followlocation": true}'
-Use Proxy: --options '{proxy: "http://proxyurl.com", proxyuserpwd: "user:password"}'
-Disable TLS Verification: '{"ssl_verifypeer": false}'
+  Follow Redirects: --options '{"followlocation": true}'
+  Use Proxy: --options '{proxy: "http://proxyurl.com", proxyuserpwd: "user:password"}'
+  Disable TLS Verification: '{"ssl_verifypeer": false}'
 
 References:
-Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1
-Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html
-
+  Typhoeus Docs: https://www.rubydoc.info/gems/typhoeus/1.3.1
+  Libcurl Options: https://curl.haxx.se/libcurl/c/curl_easy_setopt.html
 ```
 
 ### check-http.rb and check-https-cert.rb
