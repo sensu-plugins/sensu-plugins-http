@@ -37,8 +37,6 @@ require 'sensu-plugin/metric/cli'
 require 'typhoeus'
 require 'json'
 
-
-
 #
 # Libcurl Metrics
 #
