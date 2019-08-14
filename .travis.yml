@@ -24,7 +24,7 @@ script:
   - bundle exec rake quick
 #  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 before_deploy:
-- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'; cp asset_build_scripts/Dockerfile.* bonsai/ruby-runtime/"
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git -b github-release-event bonsai || echo 'bonsai/ exists, skipping git clone'; cp asset_build_scripts/Dockerfile.* bonsai/ruby-runtime/"
 deploy:
 - provider: rubygems
   api_key:
