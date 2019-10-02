@@ -93,7 +93,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Specify a uri path'
 
   option :method,
-         short: '-m GET|POST',
+         short: '-m GET|HEAD|POST|PUT',
          long: '--method GET|HEAD|POST|PUT',
          description: 'Specify a GET, HEAD, POST, or PUT operation; defaults to GET',
          in: %w[GET HEAD POST PUT],
