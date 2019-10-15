@@ -104,6 +104,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          long: '--header HEADER',
          description: 'Send one or more comma-separated headers with the request'
 
+  option :headerfile,
+         long: '--headerfile FILE',
+         description: 'Send headers with the request, read from FILE, separated by newline'
+
   option :body,
          short: '-d BODY',
          long: '--body BODY',
@@ -356,6 +360,14 @@ class CheckHttp < Sensu::Plugin::Check::CLI
         req[h.strip] = v.strip
       end
     end
+
+    if config[:headerfile]
+      File.readlines(config[:headerfile]).each do |line|
+        h, v = line.split(':', 2)
+        req[h.strip] = v.strip
+      end
+    end
+
     req.body = config[:body] if config[:body]
 
     req = apply_v4_signature(http, req, config) if config[:aws_v4]
