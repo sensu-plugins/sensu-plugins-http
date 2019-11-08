@@ -87,7 +87,7 @@ Usage: metrics-curl.rb (options)
 #### Sensu Go
 ##### Asset registration
 
-Assets are the best way to make use of this handler. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset: 
+Assets are the best way to make use of this plugin. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset: 
 
 `sensuctl asset add sensu-plugins/sensu-plugins-http`
 
