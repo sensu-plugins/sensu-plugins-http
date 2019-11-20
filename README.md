@@ -21,6 +21,8 @@
 
 This plugin provides native HTTP instrumentation for monitoring and metrics collection, including: response code, JSON response, HTTP last modified, SSL expiry, and metrics via `curl`.
 
+The Sensu assets packaged from this repository are built against the Sensu ruby runtime environment. When using these assets as part of a Sensu Go resource (check, mutator or handler), make sure you include the corresponding Sensu ruby runtime asset in the list of assets needed by the resource.  The current ruby-runtime assets can be found [here](https://bonsai.sensu.io/assets/sensu/sensu-ruby-runtime) in the [Bonsai Asset Index](bonsai.sensu.io)
+
 #### Files
  * bin/check-http-json.rb
  * bin/check-http.rb
