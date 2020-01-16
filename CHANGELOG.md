@@ -10,6 +10,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 
+### Breaking Change
+- Updated json requirement from '< 2.0.0' to '~> 2.3'
+
 ### Fixed
 - `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
 
