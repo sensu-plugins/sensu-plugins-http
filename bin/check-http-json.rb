@@ -142,9 +142,9 @@ class CheckJson < Sensu::Plugin::Check::CLI
 
   def json_valid?(str)
     ::JSON.parse(str)
-    return true
+    true
   rescue ::JSON::ParserError
-    return false
+    false
   end
 
   def acquire_resource
@@ -204,14 +204,17 @@ class CheckJson < Sensu::Plugin::Check::CLI
       message = "key has expected value: '#{config[:key]}' "
       if config[:value]
         raise "unexpected value for key: '#{leaf}' != '#{config[:value]}'" unless leaf.to_s == config[:value].to_s
+
         message += "equals '#{config[:value]}'"
       end
       if config[:valueGt]
         raise "unexpected value for key: '#{leaf}' not > '#{config[:valueGt]}'" unless leaf.to_f > config[:valueGt].to_f
+
         message += "greater than '#{config[:valueGt]}'"
       end
       if config[:valueLt]
         raise "unexpected value for key: '#{leaf}' not < '#{config[:valueLt]}'" unless leaf.to_f < config[:valueLt].to_f
+
         message += "less than '#{config[:valueLt]}'"
       end
 
