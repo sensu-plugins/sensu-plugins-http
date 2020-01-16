@@ -40,7 +40,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
 
   s.add_development_dependency 'bundler',                   '~> 2.1'
   s.add_development_dependency 'github-markup',             '~> 3.0'
-  s.add_development_dependency 'json',                      '~> 3.0.0'
+  s.add_development_dependency 'json',                      '~> 2.3'
   s.add_development_dependency 'kitchen-docker',            '~> 2.6'
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
   s.add_development_dependency 'kitchen-vagrant',           '~> 1.3'

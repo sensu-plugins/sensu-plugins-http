@@ -10,7 +10,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 
 ### Breaking Change
-- Updated json requirement from '< 2.0.0' to '~> 3.0.0'
+- Updated json requirement from '< 2.0.0' to '~> 2.3'
 
 ## [5.1.1] - 2019-06-21
 ### Fixed
