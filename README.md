@@ -50,7 +50,7 @@ Usage: check-http.rb (options)
     -H, --header HEADER              Send one or more comma-separated headers with the request
     -h, --hostname HOSTNAME          A HOSTNAME to connect to
     -k                               Enabling insecure connections
-    -m, --method GET|POST|PUT        Specify a GET, POST, or PUT operation; defaults to GET (included in ['GET', 'POST', 'PUT'])
+     -m, --method GET|HEAD|POST|PUT   Specify a GET, HEAD, POST, or PUT operation; defaults to GET (included in ['GET', 'HEAD', 'POST', 'PUT'])
     -g, --min-bytes BYTES            Check the response contains at least BYTES bytes
     -n, --negquery PAT               Query for a specific pattern that must be absent
         --noproxy                    Do not use proxy server even from environment http_proxy setting
