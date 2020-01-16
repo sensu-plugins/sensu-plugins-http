@@ -363,7 +363,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     res = http.request(req)
 
     body = if config[:whole_response]
-             "\n" + res.body
+             "\n" + res.body.to_s
            else
              body = if config[:response_bytes] # rubocop:disable Lint/UselessAssignment
                       "\n" + res.body[0..config[:response_bytes]]
