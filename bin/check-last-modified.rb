@@ -38,31 +38,31 @@ require 'sensu-plugins-http'
 class CheckLastModified < Sensu::Plugin::Check::CLI
   include Common
   option :aws_access_key_id,
-         short:       '-a AWS_ACCESS_KEY_ID',
-         long:        '--aws-access-key-id AWS_ACCESS_KEY_ID',
+         short: '-a AWS_ACCESS_KEY_ID',
+         long: '--aws-access-key-id AWS_ACCESS_KEY_ID',
          description: 'AWS Access Key. Either set ENV["AWS_ACCESS_KEY_ID"] or provide it as an option',
-         default:     ENV['AWS_ACCESS_KEY_ID']
+         default: ENV['AWS_ACCESS_KEY_ID']
 
   option :aws_secret_access_key,
-         short:       '-k AWS_SECRET_KEY',
-         long:        '--aws-secret-access-key AWS_SECRET_ACCESS_KEY',
+         short: '-k AWS_SECRET_KEY',
+         long: '--aws-secret-access-key AWS_SECRET_ACCESS_KEY',
          description: 'AWS Secret Access Key. Either set ENV["AWS_SECRET_ACCESS_KEY"] or provide it as an option',
-         default:     ENV['AWS_SECRET_ACCESS_KEY']
+         default: ENV['AWS_SECRET_ACCESS_KEY']
 
   option :aws_region,
-         short:       '-r AWS_REGION',
-         long:        '--aws-region REGION',
+         short: '-r AWS_REGION',
+         long: '--aws-region REGION',
          description: 'AWS Region (defaults to us-east-1).',
-         default:     'us-east-1'
+         default: 'us-east-1'
 
   option :s3_config_bucket,
-         short:       '-s S3_CONFIG_BUCKET',
-         long:        '--s3-config-bucket S3_CONFIG_BUCKET',
+         short: '-s S3_CONFIG_BUCKET',
+         long: '--s3-config-bucket S3_CONFIG_BUCKET',
          description: 'S3 config bucket'
 
   option :s3_config_key,
-         short:       '-k S3_CONFIG_KEY',
-         long:        '--s3-config-key S3_CONFIG_KEY',
+         short: '-k S3_CONFIG_KEY',
+         long: '--s3-config-key S3_CONFIG_KEY',
          description: 'S3 config key'
 
   option :url,
