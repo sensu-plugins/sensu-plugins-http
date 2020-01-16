@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changed
 - Updated bundler development dependancy to '~> 2.1'
+- Make rake Kitchen tasks conditional on ability to load kitchen module in development env.  kitchen module will not load on hosts without docker runtime.
  
 ## [5.1.1] - 2019-06-21
 ### Fixed
