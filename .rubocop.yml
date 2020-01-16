@@ -1,31 +1,31 @@
 AllCops:
   TargetRubyVersion: 2.3
 
-MethodLength:
+Metrics/MethodLength:
   Max: 200
 
-LineLength:
+Metrics/LineLength:
   Max: 160
 
-AbcSize:
+Metrics/AbcSize:
   Max: 220
 
-FileName:
+Metrics/PerceivedComplexity:
   Enabled: false
 
-PerceivedComplexity:
+Metrics/CyclomaticComplexity:
   Enabled: false
 
-CyclomaticComplexity:
+Metrics/ClassLength:
   Enabled: false
 
-ClassLength:
+Naming/FileName:
   Enabled: false
 
-IfUnlessModifier:
+Style/IfUnlessModifier:
   Enabled: false
 
-RegexpLiteral:
+Style/RegexpLiteral:
   Enabled: false
 
 Style/Documentation:
@@ -41,8 +41,6 @@ Style/NumericPredicate:
 Style/SafeNavigation:
   Enabled: false
 
-Performance/RegexpMatch:
-  Enabled: false
 
 # highly opinionated, subject to false positives, and likely to break valid code
 Style/FormatStringToken:

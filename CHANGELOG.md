@@ -7,11 +7,15 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
 
-### Changed
-- Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
-
 ### Fixed
 - Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
+
+### Changed
+- Updated bundler development dependancy to '~> 2.1'
+- Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
+- Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
+- Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
+- Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
 
 ## [5.1.1] - 2019-06-21
 ### Fixed

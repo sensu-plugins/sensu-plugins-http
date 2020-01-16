@@ -22,7 +22,7 @@ script:
   - gem build sensu-plugins-http.gemspec
   - gem install sensu-plugins-http-*.gem
   - bundle exec rake quick
-#  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
+  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 before_deploy:
 - bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'; cp asset_build_scripts/Dockerfile.* bonsai/ruby-runtime/"
 deploy:
