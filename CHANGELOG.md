@@ -4,6 +4,44 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Changed
+- Updated bundler development dependancy to '~> 2.1'
+- Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
+- Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
+
+## [5.1.1] - 2019-06-21
+### Fixed
+- Fix issue with JSON.parse referencing sensu-plugin subclass instead of top level ::JSON module as intended
+- Fix missing runtime dependancy on oj needed for metrics-http-json-deep.rb
+
+## [5.1.0] - 2019-05-06
+### Added
+metrics-http-json.rb: Added the option to disable ssl cert verification
+metrics-http-json.rb: Added debug option to see the processing of json data
+
+## [5.0.0] - 2019-04-18
+### Breaking Changes
+- Bump `sensu-plugin` dependency from `~> 3.0` to `~> 4.0` you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17)
+- Disable kitchen tests
+
+### Added
+- Travis build automation to generate Sensu Asset tarballs that can be used n conjunction with Sensu provided ruby runtime assets and the Bonsai Asset Index
+
+
+## [4.1.0] - 2019-02-17
+### Added
+- `check-http.rb`: Add options to set `--open-timeout` and `--read-timeout` for Net:HTTP. Additionally rescue `Net::OpenTimeout` and `Net::ReadTimeout` exception classes (@johanek)
+- `check-http.rb`: exposed `--dns-timeout` for Ruby DNS Resolver. (@johanek)
+
+### Changed
+- `check-http.rb`: switched to using rubies DNS resolver to allow catching DNS failures when Net::HTTP establishes connection. (@johanek)
+
+### Removed
+- removed codeclimate (@tmonk42)
+
+## [4.0.0] - 2018-12-17
+### Breaking Changes
+- bumped dependency of `sensu-plugin` to `~> 3.0` (@dependabot) @majormoses
 
 ## [3.0.1] - 2018-09-04
 ### Fixed
@@ -210,7 +248,12 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.1...HEAD
+[5.1.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.0...5.1.1
+[5.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.0.0...5.1.0
+[5.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.1.0...5.0.0
+[4.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.0.0...4.1.0
+[4.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.11.0...3.0.0
 [2.11.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/2.10.0...2.11.0

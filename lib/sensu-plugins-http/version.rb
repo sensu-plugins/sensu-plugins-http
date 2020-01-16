@@ -2,8 +2,8 @@
 
 module SensuPluginsHttp
   module Version
-    MAJOR = 3
-    MINOR = 0
+    MAJOR = 5
+    MINOR = 1
     PATCH = 1
 
     VER_STRING = [MAJOR, MINOR, PATCH].compact.join('.')

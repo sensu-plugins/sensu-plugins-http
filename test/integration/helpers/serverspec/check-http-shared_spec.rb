@@ -6,7 +6,7 @@ require 'shared_spec'
 gem_path = '/usr/local/bin'
 check_name = 'check-http.rb'
 check = "#{gem_path}/#{check_name}"
-domain = 'localhost'
+domain = '127.0.0.1'
 
 describe 'ruby environment' do
   it_behaves_like 'ruby checks', check
@@ -40,8 +40,14 @@ end
 describe command("#{check} --url https://#{domain}/okay") do
   its(:exit_status) { should eq 2 }
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.3.0')
-    its(:stdout) { should match(/CheckHttp CRITICAL: Request error: Failed to open TCP connection to localhost:443/) }
+    its(:stdout) { should match(/CheckHttp CRITICAL: Request error: Failed to open TCP connection to 127.0.0.1:443/) }
   else
-    its(:stdout) { should match(/CheckHttp CRITICAL: Request error: Cannot assign requested address - connect\(2\) for "localhost" port 443/) }
+    its(:stdout) { should match(/CheckHttp CRITICAL: Request error: Cannot assign requested address - connect\(2\) for "127.0.0.1" port 443/) }
   end
+end
+
+# DNS timeout
+describe command("#{check} --url http://blackhole.webpagetest.org/okay --dns-timeout 0.00001") do
+  its(:exit_status) { should eq 2 }
+  its(:stdout) { should match(/CheckHttp CRITICAL: Request error: Failed to open TCP connection to blackhole.webpagetest.org/) }
 end

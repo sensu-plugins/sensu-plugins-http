@@ -20,3 +20,5 @@ mkmf.log
 #Intellij files
 *.iml
 *.idea
+
+vendor/

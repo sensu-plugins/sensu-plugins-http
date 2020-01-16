@@ -59,6 +59,7 @@ require 'sensu-plugin/check/cli'
 require 'net/http'
 require 'net/https'
 require 'digest'
+require 'resolv-replace'
 
 #
 # Check HTTP
@@ -165,8 +166,26 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          short: '-t SECS',
          long: '--timeout SECS',
          proc: proc(&:to_i),
-         description: 'Set the timeout',
+         description: 'Set the total execution timeout in seconds',
          default: 15
+
+  option :open_timeout,
+         long: '--open-timeout SECS',
+         proc: proc(&:to_i),
+         description: 'Number of seconds to wait for the connection to open',
+         default: 15
+
+  option :read_timeout,
+         long: '--read-timeout SECS',
+         proc: proc(&:to_i),
+         description: 'Number of seconds to wait for one block to be read',
+         default: 15
+
+  option :dns_timeout,
+         long: '--dns-timeout SECS',
+         proc: proc(&:to_f),
+         description: 'Number of seconds to allow for DNS resolution. Accepts decimal number.',
+         default: 0.8
 
   option :redirectok,
          short: '-r',
@@ -250,10 +269,20 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       config[:port] ||= config[:ssl] ? 443 : 80
     end
 
+    # Use Ruby DNS Resolver and set DNS resolution timeout to dns_timeout value
+    hosts_resolver = Resolv::Hosts.new
+    dns_resolver = Resolv::DNS.new
+    dns_resolver.timeouts = config[:dns_timeout]
+    Resolv::DefaultResolver.replace_resolvers([hosts_resolver, dns_resolver])
+
     begin
       Timeout.timeout(config[:timeout]) do
         acquire_resource
       end
+    rescue Net::OpenTimeout
+      critical 'Request timed out opening connection'
+    rescue Net::ReadTimeout
+      critical 'Request timed out reading data'
     rescue Timeout::Error
       critical 'Request timed out'
     rescue StandardError => e
@@ -279,8 +308,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     else
       http = Net::HTTP.new(config[:host], config[:port])
     end
-    http.read_timeout = config[:timeout]
-    http.open_timeout = config[:timeout]
+    http.read_timeout = config[:read_timeout]
+    http.open_timeout = config[:open_timeout]
     http.ssl_timeout = config[:timeout]
     http.continue_timeout = config[:timeout]
     http.keep_alive_timeout = config[:timeout]
