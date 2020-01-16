@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changed
 - Updated bundler development dependancy to '~> 2.1'
+- Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
  
 ## [5.1.1] - 2019-06-21
 ### Fixed
