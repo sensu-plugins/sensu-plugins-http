@@ -6,7 +6,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changed
 - Updated bundler development dependancy to '~> 2.1'
- 
+- Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
+
 ## [5.1.1] - 2019-06-21
 ### Fixed
 - Fix issue with JSON.parse referencing sensu-plugin subclass instead of top level ::JSON module as intended
