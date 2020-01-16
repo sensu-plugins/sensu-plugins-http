@@ -141,9 +141,9 @@ class CheckJson < Sensu::Plugin::Check::CLI
   end
 
   def json_valid?(str)
-    JSON.parse(str)
+    ::JSON.parse(str)
     return true
-  rescue JSON::ParserError
+  rescue ::JSON::ParserError
     return false
   end
 
@@ -194,7 +194,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
     critical 'invalid JSON from request' unless json_valid?(res.body)
     ok 'valid JSON returned' if config[:key].nil? && config[:value].nil?
 
-    json = JSON.parse(res.body)
+    json = ::JSON.parse(res.body)
 
     begin
       leaf = deep_value(json, config[:key])
@@ -218,7 +218,7 @@ class CheckJson < Sensu::Plugin::Check::CLI
       ok message
     rescue StandardError => e
       if config[:dump_json]
-        json_response = config[:pretty] ? JSON.pretty_generate(json) : json
+        json_response = config[:pretty] ? ::JSON.pretty_generate(json) : json
         message = "key check failed: #{e}. Response: #{json_response}"
       else
         message = "key check failed: #{e}"
