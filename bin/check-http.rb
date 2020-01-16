@@ -93,10 +93,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Specify a uri path'
 
   option :method,
-         short: '-m GET|POST',
-         long: '--method GET|POST|PUT',
-         description: 'Specify a GET, POST, or PUT operation; defaults to GET',
-         in: %w[GET POST PUT],
+         short: '-m GET|HEAD|POST|PUT',
+         long: '--method GET|HEAD|POST|PUT',
+         description: 'Specify a GET, HEAD, POST, or PUT operation; defaults to GET',
+         in: %w[GET HEAD POST PUT],
          default: 'GET'
 
   option :header,
@@ -341,6 +341,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     req = case config[:method]
           when 'GET'
             Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
+          when 'HEAD'
+            Net::HTTP::Head.new(config[:request_uri], 'User-Agent' => config[:ua])
           when 'POST'
             Net::HTTP::Post.new(config[:request_uri], 'User-Agent' => config[:ua])
           when 'PUT'
