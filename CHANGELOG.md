@@ -16,7 +16,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ### Breaking Change
 - Updated json requirement from '< 2.0.0' to '~> 2.3'
-
+- Updated oj requirement from '~> 2.18' to '~> 3.10'
 ### Fixed
 - `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
 
