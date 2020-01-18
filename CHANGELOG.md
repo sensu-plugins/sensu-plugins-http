@@ -4,11 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [6.0.0] - 2020-01-17
 ### Added
 - New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
+- `check-http.rb`: Add `HEAD` to method options
 
 ### Fixed
 - Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
+- `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
 
 ### Changed
 - `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
@@ -25,11 +29,6 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Breaking Change
 - Updated json requirement from '< 2.0.0' to '~> 2.3'
 - Updated oj requirement from '~> 2.18' to '~> 3.10'
-### Fixed
-- `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
-
-### Added
-- `check-http.rb`: Add `HEAD` to method options
 
 ## [5.1.1] - 2019-06-21
 ### Fixed
@@ -270,7 +269,8 @@ metrics-http-json.rb: Added debug option to see the processing of json data
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.0...HEAD
+[6.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.1...6.0.0
 [5.1.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/4.1.0...5.0.0
