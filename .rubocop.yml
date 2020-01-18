@@ -4,7 +4,7 @@ AllCops:
 Metrics/MethodLength:
   Max: 200
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
 
 Metrics/AbcSize:

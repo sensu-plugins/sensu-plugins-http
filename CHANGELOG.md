@@ -11,11 +11,25 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
 
 ### Changed
+- `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
 - Updated bundler development dependancy to '~> 2.1'
+- Make rake Kitchen tasks conditional on ability to load kitchen module in development env.  kitchen module will not load on hosts without docker runtime.
+- Update asset build definitions to match targets supported by ruby-runtime
 - Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
 - Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
+- Updated rake requirement from '~> 12.3' to '~> 13.0'
+- Updated rest-client runtime requirement from '~> 2.0.2' to '~> 2.1'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 - Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
+
+### Breaking Change
+- Updated json requirement from '< 2.0.0' to '~> 2.3'
+- Updated oj requirement from '~> 2.18' to '~> 3.10'
+### Fixed
+- `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
+
+### Added
+- `check-http.rb`: Add `HEAD` to method options
 
 ## [5.1.1] - 2019-06-21
 ### Fixed
