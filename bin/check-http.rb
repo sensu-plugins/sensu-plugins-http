@@ -421,10 +421,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       if config[:redirectok] || config[:redirectto]
         if config[:redirectok]
           # #YELLOW
-          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable BlockNesting
+          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable Metrics/BlockNesting
         elsif config[:redirectto]
           # #YELLOW
-          if config[:redirectto] == res['Location'] # rubocop:disable BlockNesting
+          if config[:redirectto] == res['Location'] # rubocop:disable Metrics/BlockNesting
             ok "#{res.code} found redirect to #{res['Location']}" + body
           else
             critical "Expected redirect to #{config[:redirectto]} instead redirected to #{res['Location']}" + body

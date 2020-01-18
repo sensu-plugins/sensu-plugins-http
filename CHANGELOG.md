@@ -10,6 +10,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Update asset build definitions to match targets supported by ruby-runtime
 - Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
 - Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
+- Updated rake requirement from '~> 12.3' to '~> 13.0'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 
 ### Breaking Change
