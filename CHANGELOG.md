@@ -11,6 +11,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
 - Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
 - Updated rake requirement from '~> 12.3' to '~> 13.0'
+- Updated rest-client runtime requirement from '~> 2.0.2' to '~> 2.1'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 
 ### Breaking Change
