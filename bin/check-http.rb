@@ -93,10 +93,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
          description: 'Specify a uri path'
 
   option :method,
-         short: '-m GET|POST',
-         long: '--method GET|POST|PUT',
-         description: 'Specify a GET, POST, or PUT operation; defaults to GET',
-         in: %w[GET POST PUT],
+         short: '-m GET|HEAD|POST|PUT',
+         long: '--method GET|HEAD|POST|PUT',
+         description: 'Specify a GET, HEAD, POST, or PUT operation; defaults to GET',
+         in: %w[GET HEAD POST PUT],
          default: 'GET'
 
   option :header,
@@ -341,6 +341,8 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     req = case config[:method]
           when 'GET'
             Net::HTTP::Get.new(config[:request_uri], 'User-Agent' => config[:ua])
+          when 'HEAD'
+            Net::HTTP::Head.new(config[:request_uri], 'User-Agent' => config[:ua])
           when 'POST'
             Net::HTTP::Post.new(config[:request_uri], 'User-Agent' => config[:ua])
           when 'PUT'
@@ -363,7 +365,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
     res = http.request(req)
 
     body = if config[:whole_response]
-             "\n" + res.body
+             "\n" + res.body.to_s
            else
              body = if config[:response_bytes] # rubocop:disable Lint/UselessAssignment
                       "\n" + res.body[0..config[:response_bytes]]
@@ -419,10 +421,10 @@ class CheckHttp < Sensu::Plugin::Check::CLI
       if config[:redirectok] || config[:redirectto]
         if config[:redirectok]
           # #YELLOW
-          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable BlockNesting
+          ok("#{res.code}, #{size} bytes" + body) unless config[:response_code] # rubocop:disable Metrics/BlockNesting
         elsif config[:redirectto]
           # #YELLOW
-          if config[:redirectto] == res['Location'] # rubocop:disable BlockNesting
+          if config[:redirectto] == res['Location'] # rubocop:disable Metrics/BlockNesting
             ok "#{res.code} found redirect to #{res['Location']}" + body
           else
             critical "Expected redirect to #{config[:redirectto]} instead redirected to #{res['Location']}" + body
