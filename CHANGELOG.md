@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 ### Changed
+- `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
 - Updated bundler development dependancy to '~> 2.1'
 - Make rake Kitchen tasks conditional on ability to load kitchen module in development env.  kitchen module will not load on hosts without docker runtime.
 - Update asset build definitions to match targets supported by ruby-runtime
@@ -17,6 +18,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Breaking Change
 - Updated json requirement from '< 2.0.0' to '~> 2.3'
 - Updated aws-sdk requirement from '~> 2.3' to '~> 3.0'
+- Updated oj requirement from '~> 2.18' to '~> 3.10'
 
 ### Fixed
 - `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
