@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+### Added
+- New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
+
+### Fixed
+- Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
+
 ### Changed
 - `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
 - Updated bundler development dependancy to '~> 2.1'
@@ -14,6 +20,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Updated rake requirement from '~> 12.3' to '~> 13.0'
 - Updated rest-client runtime requirement from '~> 2.0.2' to '~> 2.1'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
+- Updated metrics-curl.rb to check for existance of curl executable in PATH. If not found, reports critical error with message.
 
 ### Breaking Change
 - Updated json requirement from '< 2.0.0' to '~> 2.3'
