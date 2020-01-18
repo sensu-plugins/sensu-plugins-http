@@ -6,8 +6,11 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Changed
 - Updated bundler development dependancy to '~> 2.1'
+- Make rake Kitchen tasks conditional on ability to load kitchen module in development env.  kitchen module will not load on hosts without docker runtime.
+- Update asset build definitions to match targets supported by ruby-runtime
 - Updated test-kitchen development dependancy from '~> 1.23.5' to '~> 1.25.0'
 - Updated rubocop requirement 'from ~> 0.51.0' to '~> 0.79.0'
+- Updated rake requirement from '~> 12.3' to '~> 13.0'
 - Make rdoc a development requirement for ruby installations that package rdoc as a gem instead of as part of base ruby
 
 ### Breaking Change
