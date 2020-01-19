@@ -9,13 +9,13 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
 - `check-http.rb`: Add `HEAD` to method options
+- `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
 
 ### Fixed
 - Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
 - `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
 
 ### Changed
-- `check-http.rb` Added option to include file with multiple headers, useful for long list of headers.
 - Updated bundler development dependancy to '~> 2.1'
 - Make rake Kitchen tasks conditional on ability to load kitchen module in development env.  kitchen module will not load on hosts without docker runtime.
 - Update asset build definitions to match targets supported by ruby-runtime
