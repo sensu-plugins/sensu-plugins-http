@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Fixed
+- `metrics-curl.rb`: improved platform support for detecting `curl` which failed on a `dash` shell (@elfranne)
+
 ## [6.0.0] - 2020-01-17
 ### Added
 - New metrics-libcurl.rb  metrics check that works directly with libcurl and does not need curl executable on system. Very useful as an asset in containerized Sensu Agent installs.
@@ -14,7 +17,6 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Fixed
 - Updated asset build automation for Alpine target to ensure curl and libcurl based metrics work.
 - `check-http.rb`: An empty response body when using `-w` no longer creates a potentially confusing `no implicit conversion of nil into String` error
-- `metrics-curl.rb`: Simpler curl dectection for `/bin/dash` support (default on Ubuntu LTS) (@elfranne)
 
 ### Changed
 - Updated bundler development dependancy to '~> 2.1'
