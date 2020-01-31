@@ -5,8 +5,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+
+## [6.0.1] - 2020-01-30
 ### Fixed
-- `metrics-curl.rb`: improved platform support for detecting `curl` which failed on a `dash` shell (@elfranne)
+- `metrics-curl.rb`: improved platform support for detecting `curl` using `which` due to inconsistent options across non bash shells, tested on `bash` and `dash` shells (@elfranne)
 
 ## [6.0.0] - 2020-01-17
 ### Added
@@ -272,7 +274,8 @@ metrics-http-json.rb: Added debug option to see the processing of json data
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.1...HEAD
+[6.0.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.1...6.0.0
 [5.1.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.0.0...5.1.0
