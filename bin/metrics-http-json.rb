@@ -60,6 +60,11 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
          short: '-m METRIC::JSONKEY',
          long: '--metric METRIC::JSONKEY'
 
+  option :headers,
+         description: 'Additional HTTP request headers to send. Example: Authorization:XYZ,User-Agent:ABC',
+         short: '-H HEADER1:val,HEADER2:val',
+         long: '--headers HEADER1:val,HEADER2:val'
+
   option :object,
          description: 'The JSON object containing the data',
          short: '-o OBJECT',
@@ -85,13 +90,23 @@ class HttpJsonGraphite < Sensu::Plugin::Metric::CLI::Graphite
     if config[:object]
       object = config[:object].to_s
     end
+
+    header_dict = {}
+    if config[:headers]
+      config[:headers].split(',').each do |header|
+        h, v = header.split(':', 2)
+        header_dict[h] = v.strip
+      end
+    end
+
     # TODO: figure out what to do here
     url = URI.encode(config[:url].to_s) # rubocop:disable Lint/UriEscapeUnescape
     begin
       r = RestClient::Request.execute(
         url: url,
         method: :get,
-        verify_ssl: !config[:insecure]
+        verify_ssl: !config[:insecure],
+        headers: header_dict
       )
 
       puts "Http response: #{r}" if config[:debug]
