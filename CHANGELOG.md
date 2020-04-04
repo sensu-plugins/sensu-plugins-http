@@ -4,8 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [6.1.0] - 2020-04-03
 ### Added
-- `metrics-http-json.rb`: Added `-H/--header` flag to pass custom HTTP headers.
+- `metrics-http-json.rb`: Added `-H/--header` flag to pass custom HTTP headers. (@mblaettler)
 
 
 ## [6.0.1] - 2020-01-30
@@ -276,7 +278,8 @@ metrics-http-json.rb: Added debug option to see the processing of json data
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.1.0...HEAD
+[6.1.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.1...6.0.0
 [5.1.1]: https://github.com/sensu-plugins/sensu-plugins-http/compare/5.1.0...5.1.1
