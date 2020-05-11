@@ -36,7 +36,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_runtime_dependency 'oj', '~> 3.10'
   s.add_runtime_dependency 'rest-client', '~> 2.1'
   s.add_runtime_dependency 'sensu-plugin', '~> 4.0'
-  s.add_runtime_dependency 'typhoeus', '~> 1.3.1'
+  s.add_runtime_dependency 'typhoeus', '>= 1.3.1', '< 1.5.0'
 
   s.add_development_dependency 'bundler',                   '~> 2.1'
   s.add_development_dependency 'github-markup',             '~> 3.0'
