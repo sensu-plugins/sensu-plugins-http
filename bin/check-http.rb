@@ -442,7 +442,7 @@ class CheckHttp < Sensu::Plugin::Check::CLI
             critical "Expected redirect to #{config[:redirectto]} instead redirected to #{res['Location']}" + body
           end
         end
-      else
+      elsif !config[:response_code]
         warning res.code + body
       end
     when /^4/, /^5/
