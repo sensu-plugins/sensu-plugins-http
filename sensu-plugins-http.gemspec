@@ -39,7 +39,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_runtime_dependency 'typhoeus', '>= 1.3.1', '< 1.5.0'
 
   s.add_development_dependency 'bundler',                   '~> 2.1'
-  s.add_development_dependency 'github-markup',             '~> 3.0'
+  s.add_development_dependency 'github-markup',             '~> 4.0'
   s.add_development_dependency 'json',                      '~> 2.3'
   s.add_development_dependency 'kitchen-docker',            '~> 2.6'
   s.add_development_dependency 'kitchen-localhost',         '~> 0.3'
